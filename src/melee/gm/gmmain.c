@@ -127,7 +127,7 @@ static void init_spr_unk(void)
 void __eabi(void) {}
 #endif
 
-int main(void)
+void melee_init(void)
 {
     char* unused_format_string = "Data %lx\n";
     u32 _[2];
@@ -216,5 +216,15 @@ int main(void)
     init_spr_unk();
 
     db_ClearFPUExceptions();
+}
+
+void melee_frame(void)
+{
     gm_801A4510();
+}
+
+int main(void)
+{
+    melee_init();
+    melee_frame();
 }

@@ -1,0 +1,84 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "vcpkg-ninja-x64",
+      "displayName": "MSVC x64 + vcpkg + CPM (Ninja, Windows)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build_vcpkg_x64",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "USE_VCPKG": "ON",
+        "VCPKG_TARGET_TRIPLET": "x64-windows"
+      }
+    },
+    {
+      "name": "ninja-x64",
+      "displayName": "MSVC x64 + CPM (Ninja, Windows)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build_vcpkg_x64",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "USE_VCPKG": "OFF",
+        "VCPKG_TARGET_TRIPLET": "x64-windows"
+      }
+    },
+    {
+      "name": "gcc-x86",
+      "displayName": "GCC / G++ x86 (Ninja, Linux).",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/gcc-build_x86",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_FLAGS": "-m32 -B/usr/lib/gcc/x86_64-pc-linux-gnu/16/32/",
+        "CMAKE_CXX_FLAGS": "-m32 -B/usr/lib/gcc/x86_64-pc-linux-gnu/16/32/",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PC_32BIT": "ON",
+        "VCPKG_TARGET_TRIPLET": "x86-linux"
+      }
+    },
+    {
+      "name": "gcc-x64",
+      "displayName": "GCC / G++ x64 (Ninja, Linux).",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/gcc-build_x64",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PC_32BIT": "OFF",
+        "VCPKG_TARGET_TRIPLET": "x64-linux"
+      }
+    },
+    {
+      "name": "clang-x64-debug",
+      "displayName": "Clang / G++ x64 (Ninja, Linux).",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build_x64-clang-debug",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PC_32BIT": "OFF",
+        "VCPKG_TARGET_TRIPLET": "x64-linux"
+      }
+    },
+    {
+      "name": "native-debug",
+      "displayName": "Native host Debug (Ninja, 64-bit).",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "USE_VCPKG": "OFF",
+        "PC_32BIT": "OFF"
+      }
+    }
+  ]
+}

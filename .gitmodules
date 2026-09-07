@@ -1,0 +1,9 @@
+[submodule "pc/external/siphon"]
+	path = pc/external/siphon
+	url = https://github.com/linifadomra/siphon
+[submodule "pc/external/rainfall"]
+	path = pc/external/rainfall
+	url = https://github.com/linifadomra/rainfall
+[submodule "pc/external/gcesfa"]
+	path = pc/external/gcesfa
+	url = https://github.com/linifadomra/gcesfa
