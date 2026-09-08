@@ -41,6 +41,13 @@
 #include <sysdolphin/baselib/gobj.h>
 #include <sysdolphin/baselib/random.h>
 
+#ifdef PLATFORM_PC
+#define ftKb_MF_SpecialN_Coll (ftCommon_GroundAirColl_MF | Ft_MF_KeepGfx)
+#define ftKb_MF_SpecialN_Capture_Coll (ftKb_MF_SpecialN_Coll | Ft_MF_SkipModel)
+#define ftKb_MF_SpecialN_EatFall_Coll (ftCommon_GroundAirColl_MF | Ft_MF_SkipModel)
+#define ftKb_MF_SpecialN_Loop_Coll (ftKb_MF_SpecialN_Capture_Coll | Ft_MF_SkipHit | Ft_MF_KeepSfx)
+#define ftKb_MF_SpecialN_LoopRumble_Coll (ftKb_MF_SpecialN_Loop_Coll | Ft_MF_SkipRumble)
+#else
 static MotionFlags const ftKb_MF_SpecialN_Coll =
     ftCommon_GroundAirColl_MF | Ft_MF_KeepGfx;
 static MotionFlags const ftKb_MF_SpecialN_Capture_Coll =
@@ -51,6 +58,7 @@ static MotionFlags const ftKb_MF_SpecialN_Loop_Coll =
     ftKb_MF_SpecialN_Capture_Coll | Ft_MF_SkipHit | Ft_MF_KeepSfx;
 static MotionFlags const ftKb_MF_SpecialN_LoopRumble_Coll =
     ftKb_MF_SpecialN_Loop_Coll | Ft_MF_SkipRumble;
+#endif
 
 /* 0F6178 */ static void fn_800F6178(Fighter_GObj* gobj);
 /* 0F6210 */ static void fn_800F6210(Fighter_GObj* gobj);

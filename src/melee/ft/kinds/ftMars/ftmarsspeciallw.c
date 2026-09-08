@@ -25,10 +25,15 @@
 #include <melee/lb/lb_00B0.h>
 #include <melee/lb/lb_00F9.h>
 
+#ifdef PLATFORM_PC
+#define ftMs_MF_SpecialLw_Coll (ftCommon_GroundAirColl_MF | Ft_MF_KeepColAnimHitStatus | Ft_MF_SkipHit)
+#define ftMs_MF_SpecialLwHit_Coll (ftMs_MF_SpecialLw_Coll | Ft_MF_KeepGfx)
+#else
 static MotionFlags const ftMs_MF_SpecialLw_Coll =
     ftCommon_GroundAirColl_MF | Ft_MF_KeepColAnimHitStatus | Ft_MF_SkipHit;
 static MotionFlags const ftMs_MF_SpecialLwHit_Coll =
     ftMs_MF_SpecialLw_Coll | Ft_MF_KeepGfx;
+#endif
 
 void ftMs_SpecialLw_Enter(HSD_GObj* gobj)
 {

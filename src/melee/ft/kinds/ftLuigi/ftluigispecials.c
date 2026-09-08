@@ -282,7 +282,11 @@ void ftLg_SpecialAirSHold_Coll(HSD_GObj* gobj)
     }
 }
 
+#ifdef PLATFORM_PC
+#define transition_flags1 (transition_flags0 | Ft_MF_KeepGfx)
+#else
 static u32 const transition_flags1 = transition_flags0 | Ft_MF_KeepGfx;
+#endif
 
 /// Luigi's Green Missile Charge ground -> air Acion State handler
 void ftLg_SpecialSHold_GroundToAir(HSD_GObj* gobj)
