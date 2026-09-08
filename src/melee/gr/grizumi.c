@@ -8,7 +8,7 @@
 #include "grzakogenerator.h"
 #include "inlines.h"
 #include "types.h"
-#include <dolphin/gx/GXTexture.h>
+#include <dolphin/gx.h>
 #include <dolphin/mtx.h>
 #include <melee/cm/camera.h>
 #include <melee/ft/ftdrawcommon.h>

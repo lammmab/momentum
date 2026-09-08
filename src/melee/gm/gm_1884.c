@@ -23,7 +23,6 @@
 #include <melee/pl/pl_040D.h>
 #include <melee/pl/player.h>
 #include <melee/sc/types.h>
-#include <Runtime/runtime.h>
 #include <sysdolphin/baselib/aobj.h>
 #include <sysdolphin/baselib/cobj.h>
 #include <sysdolphin/baselib/dobj.h>

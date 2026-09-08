@@ -3284,7 +3284,11 @@ int Ground_801C5940(void)
     UnkArchiveStruct* archive;
     const size_t vals_count = 32;
     u8 _[4];
+#ifdef PLATFORM_PC
+    int vals[32];
+#else
     int vals[vals_count];
+#endif
     archive = grDatFiles_GetArchive();
     out_idx = 0;
     if (archive->unk4->unk4 == 0) {
