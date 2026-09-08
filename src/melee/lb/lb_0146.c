@@ -1,5 +1,5 @@
 #include "types.h"
-#include <dolphin/gx/GXCull.h>
+#include <dolphin/gx.h>
 #include <dolphin/gx/GXGeometry.h>
 #include <dolphin/gx/GXLighting.h>
 #include <dolphin/gx/GXPixel.h>

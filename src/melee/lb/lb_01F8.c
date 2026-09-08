@@ -2,7 +2,7 @@
 
 #include "lbfile.h"
 #include "lbmthp.h"
-#include <dolphin/thp/thp.h>
+#include <dolphin/thp.h>
 #include <sysdolphin/baselib/memory.h>
 #include <sysdolphin/baselib/sobjlib.h>
 #include <sysdolphin/baselib/tobj.h>

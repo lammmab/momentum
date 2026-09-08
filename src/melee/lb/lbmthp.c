@@ -4,9 +4,9 @@
 
 #include "lbfile.h"
 #include <dolphin/dvd.h>
-#include <dolphin/gx/GXTexture.h>
+#include <dolphin/gx.h>
 #include <dolphin/os.h>
-#include <dolphin/thp/thp.h>
+#include <dolphin/thp.h>
 #include <sysdolphin/baselib/debug.h>
 #include <sysdolphin/baselib/devcom.h>
 #include <sysdolphin/baselib/memory.h>

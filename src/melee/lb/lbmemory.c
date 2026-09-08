@@ -5,7 +5,7 @@
 #include <string.h>
 
 #include <dolphin/ar.h>
-#include <dolphin/os/OSAlarm.h>
+#include <dolphin/os.h>
 #include <sysdolphin/baselib/debug.h>
 #include <sysdolphin/baselib/devcom.h>
 

@@ -6,14 +6,7 @@
 
 #include "lbarchive.h"
 #include "types.h"
-#include <dolphin/gx/GXBump.h>
-#include <dolphin/gx/GXEnum.h>
-#include <dolphin/gx/GXGeometry.h>
-#include <dolphin/gx/GXLighting.h>
-#include <dolphin/gx/GXPixel.h>
-#include <dolphin/gx/GXTev.h>
-#include <dolphin/gx/GXTexture.h>
-#include <dolphin/gx/GXTransform.h>
+#include <dolphin/gx.h>
 #include <dolphin/os/OSCache.h>
 #include <sysdolphin/baselib/class.h>
 #include <sysdolphin/baselib/cobj.h>
