@@ -3,7 +3,11 @@
 
 #include <melee/ft/forward.h>
 
+#ifdef PLATFORM_PC
+#define ftCl_MF_Zair (Ft_MF_KeepFastFall | Ft_MF_SkipModel | Ft_MF_SkipAnimVel | Ft_MF_Unk06)
+#else
 static MotionFlags const ftCl_MF_Zair =
     Ft_MF_KeepFastFall | Ft_MF_SkipModel | Ft_MF_SkipAnimVel | Ft_MF_Unk06;
+#endif
 
 #endif

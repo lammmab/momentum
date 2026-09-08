@@ -8,6 +8,26 @@ typedef struct ftLk_DatAttrs ftLk_DatAttrs;
 typedef struct ftLk_FighterVars ftLk_FighterVars;
 typedef union ftLk_MotionVars ftLk_MotionVars;
 
+#ifdef PLATFORM_PC
+#define ftLk_MF_Base0 (Ft_MF_SkipModel | Ft_MF_SkipThrowException)
+#define ftLk_MF_Base1 (Ft_MF_SkipItemVis | Ft_MF_FreezeState)
+#define ftLk_MF_Base2 (ftLk_MF_Base1 | Ft_MF_KeepFastFall)
+#define ftLk_MF_Base3 (ftLk_MF_Base0 | Ft_MF_UnkUpdatePhys)
+#define ftLk_MF_AttackS42 (ftLk_MF_Base2 | Ft_MF_SkipHit)
+#define ftLk_MF_SpecialN (ftLk_MF_Base2 | ftLk_MF_Base3)
+#define ftLk_MF_SpecialNFullyCharged (ftLk_MF_SpecialN | Ft_MF_Unk19)
+#define ftLk_MF_SpecialAirNCharge (ftLk_MF_SpecialN | Ft_MF_SkipParasol)
+#define ftLk_MF_SpecialAirNFullyCharged (ftLk_MF_SpecialNFullyCharged | Ft_MF_SkipParasol)
+#define ftLk_MF_SpecialAirNFire (ftLk_MF_SpecialAirNCharge | Ft_MF_UnkUpdatePhys)
+#define ftLk_MF_SpecialSThrow (ftLk_MF_Base3 | ftLk_MF_Base1 | Ft_MF_KeepGfx)
+#define ftLk_MF_SpecialSCatch (ftLk_MF_SpecialSThrow | Ft_MF_UnkUpdatePhys)
+#define ftLk_MF_SpecialAirSThrow (ftLk_MF_SpecialSThrow | ftLk_MF_Base3 | Ft_MF_SkipParasol)
+#define ftLk_MF_SpecialAirSThrowEmpty (ftLk_MF_SpecialSCatch | ftLk_MF_Base1 | Ft_MF_SkipParasol)
+#define ftLk_MF_SpecialHi (Ft_MF_KeepFastFall | Ft_MF_KeepGfx | Ft_MF_SkipModel | Ft_MF_KeepSfx | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys | Ft_MF_FreezeState)
+#define ftLk_MF_SpecialLw (Ft_MF_KeepColAnimHitStatus | Ft_MF_SkipModel | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys | Ft_MF_FreezeState)
+#define ftLk_MF_SpecialAirLw (ftLk_MF_SpecialLw | Ft_MF_SkipParasol)
+#define ftLk_MF_ZairCatch (Ft_MF_SkipModelPartVis | Ft_MF_SkipMetalB)
+#else
 static MotionFlags const ftLk_MF_Base0 =
     Ft_MF_SkipModel | Ft_MF_SkipThrowException;
 
@@ -58,6 +78,7 @@ static MotionFlags const ftLk_MF_SpecialAirLw =
 
 static MotionFlags const ftLk_MF_ZairCatch =
     Ft_MF_SkipModelPartVis | Ft_MF_SkipMetalB;
+#endif
 
 typedef enum ftLink_MotionState {
     ftLk_MS_AttackS42 = ftCo_MS_Count,

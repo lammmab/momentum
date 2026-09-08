@@ -1351,7 +1351,11 @@ void efLib_Cb_ftKp_SpecialHi(EF_Effect* effect)
     } else {
         HSD_JObjSetFlagsAll(jobj_2, JOBJ_HIDDEN);
     }
+#ifdef PLATFORM_PC
+    if ((fighter->cmd_vars[2] & 1) && (fighter->mv.co.common.x10 != NULL)) {
+#else
     if ((fighter->cmd_vars[2] & 1) && ((s32) fighter->mv.co.common.x10 != 0)) {
+#endif
         rotate_z = -atan2f(fighter->coll_data.floor.normal.x,
                            fighter->coll_data.floor.normal.y);
         HSD_JObjSetRotationZ(jobj_1, rotate_z);

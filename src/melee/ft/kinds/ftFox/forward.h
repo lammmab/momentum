@@ -6,6 +6,22 @@
 
 typedef struct ftFox_DatAttrs ftFox_DatAttrs;
 
+#ifdef PLATFORM_PC
+#define ftFx_MF_Appeal (Ft_MF_KeepGfx | Ft_MF_SkipModel | Ft_MF_SkipAnimVel | Ft_MF_Unk06)
+#define ftFx_MF_Special (Ft_MF_SkipModel | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys | Ft_MF_FreezeState)
+#define ftFx_MF_SpecialN (ftFx_MF_Special | Ft_MF_KeepFastFall | Ft_MF_SkipThrowException)
+#define ftFx_MF_SpecialS (ftFx_MF_Special | Ft_MF_KeepGfx | Ft_MF_KeepSfx)
+#define ftFx_MF_SpecialHi (ftFx_MF_SpecialS | Ft_MF_KeepFastFall)
+#define ftFx_MF_SpecialAirN (ftFx_MF_SpecialN | Ft_MF_SkipParasol)
+#define ftFx_MF_SpecialAirS (ftFx_MF_SpecialS | Ft_MF_SkipParasol)
+#define ftFx_MF_SpecialAirHiHold (ftFx_MF_SpecialHi | Ft_MF_SkipParasol)
+#define ftFx_MF_SpecialLw (ftFx_MF_Special | Ft_MF_KeepColAnimHitStatus | Ft_MF_SkipColAnim)
+#define ftFx_MF_SpecialAirLw (ftFx_MF_SpecialLw | Ft_MF_SkipParasol)
+#define ftFx_MF_SpecialNLoop (ftFx_MF_SpecialN | Ft_MF_Unk19)
+#define ftFx_MF_SpecialAirNLoop (ftFx_MF_SpecialNLoop | Ft_MF_SkipParasol)
+#define ftFx_MF_SpecialLwLoop (ftFx_MF_SpecialLw | Ft_MF_Unk19)
+#define ftFx_MF_SpecialAirLwLoop (ftFx_MF_SpecialLwLoop | Ft_MF_SkipParasol)
+#else
 static MotionFlags const ftFx_MF_Appeal =
     Ft_MF_KeepGfx | Ft_MF_SkipModel | Ft_MF_SkipAnimVel | Ft_MF_Unk06;
 
@@ -47,6 +63,7 @@ static MotionFlags const ftFx_MF_SpecialLwLoop =
 
 static MotionFlags const ftFx_MF_SpecialAirLwLoop =
     ftFx_MF_SpecialLwLoop | Ft_MF_SkipParasol;
+#endif
 
 typedef enum ftFox_MotionState {
     ftFx_MS_SpecialNStart = ftCo_MS_Count,

@@ -4,6 +4,31 @@
 #include <melee/ft/forward.h>
 #include <melee/ft/kinds/ftCommon/forward.h>
 
+#ifdef PLATFORM_PC
+#define ftGw_MF_Base (Ft_MF_SkipItemVis | Ft_MF_FreezeState)
+#define ftGw_MF_Landing (Ft_MF_KeepColAnimHitStatus | Ft_MF_SkipHit | Ft_MF_KeepSfx | Ft_MF_SkipParasol)
+#define ftGw_MF_LandingAirB (ftGw_MF_Landing | Ft_MF_KeepGfx)
+#define ftGw_MF_LandingAirHi (ftGw_MF_LandingAirB | Ft_MF_KeepFastFall)
+#define ftGw_MF_Attack (ftGw_MF_Base | Ft_MF_KeepSfx)
+#define ftGw_MF_AttackLw3 (ftGw_MF_Attack | Ft_MF_SkipHit)
+#define ftGw_MF_AttackAirN (ftGw_MF_Attack | ftGw_MF_Landing)
+#define ftGw_MF_AttackAirB (ftGw_MF_AttackAirN | Ft_MF_KeepGfx)
+#define ftGw_MF_AttackAirHi (ftGw_MF_AttackAirB | Ft_MF_KeepFastFall)
+#define ftGw_MF_AttackS4 (ftGw_MF_AttackLw3 | Ft_MF_KeepFastFall | Ft_MF_SkipRumble)
+#define ftGw_MF_Attack11 (ftGw_MF_Attack | Ft_MF_KeepFastFall | Ft_MF_Unk19)
+#define ftGw_MF_Attack100 (ftGw_MF_Attack | Ft_MF_KeepColAnimHitStatus | Ft_MF_Unk19)
+#define ftGw_MF_Special (ftGw_MF_Base | Ft_MF_SkipModel | Ft_MF_UnkUpdatePhys)
+#define ftGw_MF_SpecialS (ftGw_MF_Special | Ft_MF_KeepGfx)
+#define ftGw_MF_SpecialHi (ftGw_MF_Special | Ft_MF_KeepFastFall | Ft_MF_KeepGfx)
+#define ftGw_MF_SpecialLwCatch (ftGw_MF_Special | Ft_MF_KeepColAnimHitStatus)
+#define ftGw_MF_SpecialN (ftGw_MF_Special | Ft_MF_KeepFastFall | Ft_MF_SkipThrowException)
+#define ftGw_MF_SpecialAirS (ftGw_MF_SpecialS | Ft_MF_SkipParasol)
+#define ftGw_MF_SpecialAirHi (ftGw_MF_SpecialHi | Ft_MF_SkipParasol)
+#define ftGw_MF_SpecialAirLwCatch (ftGw_MF_SpecialLwCatch | Ft_MF_SkipParasol)
+#define ftGw_MF_SpecialAirN (ftGw_MF_SpecialN | Ft_MF_SkipParasol)
+#define ftGw_MF_SpecialLw (ftGw_MF_SpecialLwCatch | Ft_MF_Unk19)
+#define ftGw_MF_SpecialAirLw (ftGw_MF_SpecialLw | Ft_MF_SkipParasol)
+#else
 static MotionFlags const ftGw_MF_Base = Ft_MF_SkipItemVis | Ft_MF_FreezeState;
 
 static MotionFlags const ftGw_MF_Landing = Ft_MF_KeepColAnimHitStatus |
@@ -67,6 +92,7 @@ static MotionFlags const ftGw_MF_SpecialLw =
 
 static MotionFlags const ftGw_MF_SpecialAirLw =
     ftGw_MF_SpecialLw | Ft_MF_SkipParasol;
+#endif
 
 /// Mr. Game & Watch Motion State IDs
 typedef enum ftGameWatch_MotionState {

@@ -6,6 +6,10 @@
 
 #include <dolphin/types.h> // IWYU pragma: export
 
+#ifdef PLATFORM_PC
+#include <dolphin/math.h> // M_PI
+#endif
+
 /// @typedef bool
 /// @note Dolphin's #BOOL macro is not supported.
 /// @typedef BOOL
@@ -176,6 +180,10 @@ typedef bool (*Predicate)(void);
 #define SDATA
 #define DATA
 #define WEAK
+#endif
+
+#ifdef PLATFORM_PC
+#define M_PI_2 (M_PI / 2)
 #endif
 
 #define M_TAU 6.283185307179586

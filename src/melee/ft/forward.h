@@ -168,6 +168,93 @@ typedef enum CharacterKind {
     /* 21 */ ChKind_Max = ChKind_None
 } CharacterKind;
 
+#ifdef PLATFORM_PC
+
+// note(port): C2099 forbids non-constant initializers for static const objects.
+// Using #define makes the compiler happy.
+
+#define Ft_MF_None 0
+
+#define Ft_MF_KeepFastFall (1 << 0)
+
+#define Ft_MF_KeepGfx (1 << 1)
+
+/// Preserve full body collision state
+#define Ft_MF_KeepColAnimHitStatus (1 << 2)
+
+/// Keep hitboxes
+#define Ft_MF_SkipHit (1 << 3)
+
+/// Ignore model state change ?
+#define Ft_MF_SkipModel (1 << 4)
+
+#define Ft_MF_SkipAnimVel (1 << 5)
+
+#define Ft_MF_Unk06 (1 << 6)
+
+/// Ignore switching to character's "hurt" textures ?
+#define Ft_MF_SkipMatAnim (1 << 7)
+
+/// Resets thrower GObj pointer to NULL if false?
+#define Ft_MF_SkipThrowException (1 << 8)
+
+#define Ft_MF_KeepSfx (1 << 9)
+
+/// Ignore Parasol state change
+#define Ft_MF_SkipParasol (1 << 10)
+
+/// Ignore rumble update?
+#define Ft_MF_SkipRumble (1 << 11)
+
+#define Ft_MF_SkipColAnim (1 << 12)
+
+/// Keep respawn platform?
+#define Ft_MF_KeepAccessory (1 << 13)
+
+/// Run all Subaction Events up to the current animation frame
+#define Ft_MF_UpdateCmd (1 << 14)
+
+#define Ft_MF_SkipNametagVis (1 << 15)
+
+/// Assume this is for individual bones?
+#define Ft_MF_KeepColAnimPartHitStatus (1 << 16)
+
+#define Ft_MF_KeepSwordTrail (1 << 17)
+
+/// Used by Ness during Up/Down Smash
+#define Ft_MF_SkipItemVis (1 << 18)
+
+/// Skips updating bit 5 of #Fighter::x2222_flag?
+#define Ft_MF_Unk19 (1 << 19)
+
+#define Ft_MF_UnkUpdatePhys (1 << 20)
+
+/// Sets anim rate to 0 and some other stuff
+#define Ft_MF_FreezeState (1 << 21)
+
+#define Ft_MF_SkipModelPartVis (1 << 22)
+
+#define Ft_MF_SkipMetalB (1 << 23)
+
+#define Ft_MF_Unk24 (1 << 24)
+
+#define Ft_MF_SkipAttackCount (1 << 25)
+
+#define Ft_MF_SkipModelFlags (1 << 26)
+
+#define Ft_MF_Unk27 (1 << 27)
+
+#define Ft_MF_SkipHitStun (1 << 28)
+
+/// Keeps current fighter animation?
+#define Ft_MF_SkipAnim (1 << 29)
+
+#define Ft_MF_Unk30 (1 << 30)
+
+/// Unused?
+#define Ft_MF_Unk31 (1 << 31)
+
+#else
 static MotionFlags const Ft_MF_None = 0;
 
 static MotionFlags const Ft_MF_KeepFastFall = 1 << 0;
@@ -248,6 +335,7 @@ static MotionFlags const Ft_MF_Unk30 = 1 << 30;
 
 /// Unused?
 static MotionFlags const Ft_MF_Unk31 = 1 << 31;
+#endif
 
 /// Ledge Grab Macros
 

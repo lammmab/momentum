@@ -4,6 +4,19 @@
 #include <melee/ft/forward.h>
 #include <melee/ft/kinds/ftCommon/forward.h>
 
+#ifdef PLATFORM_PC
+#define ftPr_MF_Special (Ft_MF_SkipModel | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys | Ft_MF_FreezeState)
+#define ftPr_MF_SpecialHi (ftPr_MF_Special | Ft_MF_KeepFastFall | Ft_MF_KeepGfx)
+#define ftPr_MF_SpecialLw (ftPr_MF_Special | Ft_MF_KeepColAnimHitStatus)
+#define ftPr_MF_SpecialN (ftPr_MF_Special | Ft_MF_KeepFastFall | Ft_MF_KeepSfx)
+#define ftPr_MF_SpecialS (ftPr_MF_Special | Ft_MF_KeepGfx | Ft_MF_KeepSfx)
+#define ftPr_MF_SpecialAirHi (ftPr_MF_SpecialHi | Ft_MF_SkipParasol)
+#define ftPr_MF_SpecialAirLw (ftPr_MF_SpecialLw | Ft_MF_SkipParasol)
+#define ftPr_MF_SpecialAirN (ftPr_MF_SpecialN | Ft_MF_SkipParasol)
+#define ftPr_MF_SpecialAirS (ftPr_MF_SpecialS | Ft_MF_SkipParasol)
+#define ftPr_MF_SpecialNCharged (ftPr_MF_SpecialN | Ft_MF_Unk19)
+#define ftPr_SpecialAirNCharged (ftPr_MF_SpecialNCharged | Ft_MF_SkipParasol)
+#else
 static MotionFlags const ftPr_MF_Special =
     Ft_MF_SkipModel | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys |
     Ft_MF_FreezeState;
@@ -37,6 +50,7 @@ static MotionFlags const ftPr_MF_SpecialNCharged =
 
 static MotionFlags const ftPr_SpecialAirNCharged =
     ftPr_MF_SpecialNCharged | Ft_MF_SkipParasol;
+#endif
 
 typedef enum ftPurin_MotionState {
     ftPr_MS_JumpAerialF1 = ftCo_MS_Count,

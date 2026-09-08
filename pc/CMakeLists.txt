@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 11)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE BOOL "Enable compile_commands.json generation" FORCE)
 
-project(momentumReborn VERSION 0.1.0 LANGUAGES C CXX)
+project(momentum VERSION 0.1.0 LANGUAGES C CXX)
 
 if(CMAKE_SYSTEM_NAME MATCHES "^(Darwin|iOS)$" AND NOT CMAKE_HOST_APPLE)
     set(CMAKE_SHARED_LIBRARY_RUNTIME_C_FLAG "-Wl,-rpath,")
@@ -109,6 +109,14 @@ target_include_directories(momentum PRIVATE
     "${GAME_ROOT}/src"
     "${CMAKE_CURRENT_SOURCE_DIR}/external/rainfall/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/external/rainfall/external/stb"
+)
+
+target_compile_options(momentum PRIVATE
+    $<$<COMPILE_LANGUAGE:C,CXX>:
+        $<$<CXX_COMPILER_ID:MSVC>:/FIRuntime/platform.h>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-include>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:Runtime/platform.h>
+    >
 )
 
 if(MSVC)

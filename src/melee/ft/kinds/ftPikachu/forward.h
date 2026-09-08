@@ -4,6 +4,23 @@
 #include <melee/ft/forward.h>
 #include <melee/ft/kinds/ftCommon/forward.h>
 
+#ifdef PLATFORM_PC
+#define ftPk_MF_Special (Ft_MF_SkipModel | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys | Ft_MF_FreezeState)
+#define ftPk_MF_SpecialLw (ftPk_MF_Special | Ft_MF_KeepColAnimHitStatus)
+#define ftPk_MF_SpecialN (ftPk_MF_Special | Ft_MF_KeepFastFall | Ft_MF_SkipThrowException)
+#define ftPk_MF_SpecialHi (ftPk_MF_Special | Ft_MF_KeepFastFall | Ft_MF_KeepGfx | Ft_MF_SkipThrowException)
+#define ftPk_MF_SpecialS (ftPk_MF_Special | Ft_MF_KeepGfx | Ft_MF_KeepSfx)
+#define ftPk_MF_SpecialAirLw (ftPk_MF_SpecialLw | Ft_MF_SkipParasol)
+#define ftPk_MF_SpecialAirN (ftPk_MF_SpecialN | Ft_MF_SkipParasol)
+#define ftPk_MF_SpecialAirHi (ftPk_MF_SpecialHi | Ft_MF_SkipParasol)
+#define ftPk_MF_SpecialAirS (ftPk_MF_SpecialS | Ft_MF_SkipParasol)
+#define ftPk_MF_SpecialN_Coll (ftCommon_GroundAirColl_MF | Ft_MF_KeepGfx)
+#define ftPk_MF_SpecialHiStart_Coll (ftCommon_GroundAirColl_MF | Ft_MF_KeepColAnimHitStatus)
+#define ftPk_MF_SpecialHiMove_Coll (ftCommon_GroundAirColl_MF | Ft_MF_KeepGfx | Ft_MF_SkipHit)
+#define ftPk_MF_SpecialLw_Coll (ftCommon_GroundAirColl_MF | Ft_MF_KeepGfx | Ft_MF_KeepColAnimHitStatus)
+#define ftPk_MF_SpecialLwHit_Coll (ftPk_MF_SpecialLw_Coll | Ft_MF_SkipHit)
+#define ftPk_MF_SpecialLwHitRumble_Coll (ftPk_MF_SpecialLwHit_Coll | Ft_MF_SkipRumble)
+#else
 static MotionFlags const ftPk_MF_Special =
     Ft_MF_SkipModel | Ft_MF_SkipItemVis | Ft_MF_UnkUpdatePhys |
     Ft_MF_FreezeState;
@@ -50,6 +67,7 @@ static MotionFlags const ftPk_MF_SpecialLwHit_Coll =
 
 static MotionFlags const ftPk_MF_SpecialLwHitRumble_Coll =
     ftPk_MF_SpecialLwHit_Coll | Ft_MF_SkipRumble;
+#endif
 
 typedef enum ftPikachu_MotionState {
     ftPk_MS_SpecialN = ftCo_MS_Count,

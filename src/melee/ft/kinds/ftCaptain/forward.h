@@ -7,6 +7,18 @@
 typedef struct ftCaptain_DatAttrs ftCaptain_DatAttrs;
 typedef union ftCaptain_MotionVars ftCaptain_MotionVars;
 
+#ifdef PLATFORM_PC
+#define ftCa_MF_Special (ftCo_MF_Special | Ft_MF_KeepSfx)
+#define ftCa_MF_SpecialN (ftCa_MF_Special | Ft_MF_KeepFastFall)
+#define ftCa_MF_SpecialAirN (ftCa_MF_SpecialN | Ft_MF_SkipParasol)
+#define ftCa_MF_SpecialS (ftCa_MF_Special | Ft_MF_KeepGfx)
+#define ftCa_MF_SpecialAirSStart (ftCa_MF_SpecialS | Ft_MF_SkipParasol)
+#define ftCa_MF_SpecialAirS (ftCa_MF_SpecialS | Ft_MF_SkipParasol)
+#define ftCa_MF_SpecialHi (ftCo_MF_Special | Ft_MF_KeepFastFall | Ft_MF_KeepGfx)
+#define ftCa_MF_SpecialAirHi (ftCa_MF_SpecialHi | Ft_MF_SkipParasol)
+#define ftCa_MF_SpecialLw (ftCa_MF_Special | Ft_MF_KeepColAnimHitStatus)
+#define ftCa_MF_SpecialLwRebound (ftCa_MF_SpecialLw | Ft_MF_SkipParasol)
+#else
 static MotionFlags const ftCa_MF_Special = ftCo_MF_Special | Ft_MF_KeepSfx;
 
 static MotionFlags const ftCa_MF_SpecialN =
@@ -34,6 +46,7 @@ static MotionFlags const ftCa_MF_SpecialLw =
 
 static MotionFlags const ftCa_MF_SpecialLwRebound =
     ftCa_MF_SpecialLw | Ft_MF_SkipParasol;
+#endif
 
 typedef enum ftCaptain_MotionState {
     ftCa_MS_SwordSwing4 = ftCo_MS_Count,
