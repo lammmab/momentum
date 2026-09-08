@@ -24,6 +24,7 @@ static void sdata2_order(void)
 }
 #endif
 
+#ifndef PLATFORM_PC
 f32 expf(f32 arg8)
 {
     f32 var_f1;
@@ -108,6 +109,7 @@ s32 powi(s32 base, s32 exponent)
 return_zero:
     return 0;
 }
+#endif
 
 f32 lb_8000D008(f32 point_y_in, f32 point_x)
 {

@@ -19,6 +19,7 @@
 #endif
 #define INF MSL_TrigF_80400774[0]
 
+#ifndef PLATFORM_PC
 float atan2f(float y, float x)
 {
     if (GET_SIGN_BIT(x) == GET_SIGN_BIT(y)) {
@@ -82,6 +83,7 @@ static float lb_sqrtf(float x)
 
     return INF;
 }
+#endif
 
 #define SILVER_RATIO_1_CONJUGATE lbRefract3_804D7DD4
 

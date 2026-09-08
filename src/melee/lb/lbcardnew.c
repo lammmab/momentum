@@ -771,7 +771,7 @@ u32 lb_8001B7E0(int chan, char* filename, void* file_entries, void* save_data,
     return result;
 }
 
-int lb_8001B8C8(int chan)
+bool lb_8001B8C8(int chan)
 {
     int unused_1;
     int unused_2;
@@ -804,7 +804,7 @@ int lb_8001B99C(int chan, const char* filename, UNK_T status_out)
     return lb_80019CB0(new_var);
 }
 
-int lb_8001BA44(int chan, const char* filename, UNK_T status_out)
+bool lb_8001BA44(int chan, const char* filename, UNK_T status_out)
 {
     s32 result;
     u8 _[0x10];

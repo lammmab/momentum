@@ -49,7 +49,11 @@ void lbFile_800161C4(int file, uintptr_t src, uintptr_t dst, size_t size,
 }
 
 #define MAX_FILENAME_LENGTH 0x20
+#ifdef PLATFORM_PC
+#define FILE_EXTENSION_LENGTH 4
+#else
 const int FILE_EXTENSION_LENGTH = 4; // ".usd" or ".dat"
+#endif
 const int MAX_BASENAME_LENGTH = MAX_FILENAME_LENGTH - FILE_EXTENSION_LENGTH;
 
 /// append file extension (if needed)

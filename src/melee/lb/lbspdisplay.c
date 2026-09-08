@@ -10,7 +10,7 @@
 
 #include "lbdvd.h"
 #include "types.h"
-#include <dolphin/gx/GXCull.h>
+#include <dolphin/gx.h>
 #include <dolphin/gx/GXGeometry.h>
 #include <dolphin/gx/GXPixel.h>
 #include <dolphin/gx/GXTev.h>
