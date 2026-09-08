@@ -5,7 +5,11 @@ void hsd_803B2B20(u8* src, int len, void* dest)
 {
     int i;
     const int spCount = 16;
+#ifdef PLATFORM_PC
+    u8 sp[16];
+#else
     u8 sp[spCount];
+#endif
     sp[0x0] = 0x01;
     sp[0x1] = 0x23;
     sp[0x2] = 0x45;
