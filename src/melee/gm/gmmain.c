@@ -3,6 +3,8 @@
 
 #include <sysdolphin/baselib/forward.h>
 
+#include "gm_1A3F.h"
+#include "gm_1A45.h"
 #include "gm_unsplit.h"
 #include "gmmain_lib.h"
 #include "types.h"
@@ -220,11 +222,17 @@ void melee_init(void)
 
 void melee_frame(void)
 {
-    gm_801A4510();
+    static bool frame_initialized = false;
+    if (!frame_initialized) {
+        gm_SetSingleFrameMode(true);
+        gm_801A4510_init();
+        frame_initialized = true;
+    }
+    gm_801A4510_step();
 }
 
 int main(void)
 {
     melee_init();
-    melee_frame();
+    gm_801A4510();
 }

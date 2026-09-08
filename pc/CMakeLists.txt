@@ -111,14 +111,6 @@ target_include_directories(momentum PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/external/rainfall/external/stb"
 )
 
-target_compile_options(momentum PRIVATE
-    $<$<COMPILE_LANGUAGE:C,CXX>:
-        $<$<CXX_COMPILER_ID:MSVC>:/FIglobal.h>
-        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-include>
-        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:global.h>
-    >
-)
-
 if(MSVC)
     target_compile_options(momentum PRIVATE
         /permissive

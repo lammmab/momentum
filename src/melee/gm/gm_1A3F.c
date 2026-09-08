@@ -284,23 +284,36 @@ static inline GameMode* findMode(u8 kind)
     return NULL;
 }
 
+static bool runGameMode_initialized = false;
+static GameMode* runGameMode_current_mode = NULL;
+
 u8 runGameMode(u8 mode_kind)
 {
     u8 override;
     GameMode* mode;
     struct stateMachine* sm = &state_machine;
+    extern bool gm_single_frame_mode;
     PAD_STACK(2 * 4);
 
-    mode = findMode(mode_kind);
+    if (!runGameMode_initialized || runGameMode_current_mode == NULL ||
+        runGameMode_current_mode->kind != mode_kind)
+    {
+        mode = findMode(mode_kind);
+        runGameMode_current_mode = mode;
 
-    state_machine.pending_mode_change = false;
-    state_machine.routing.curr_state_id = 0;
-    state_machine.routing.prev_state_id = 0;
-    state_machine.routing.next_state_id = 0;
-    lbDvd_80018F58(mode->preloaded);
-    if (mode->on_load != NULL) {
-        mode->on_load();
+        state_machine.pending_mode_change = false;
+        state_machine.routing.curr_state_id = 0;
+        state_machine.routing.prev_state_id = 0;
+        state_machine.routing.next_state_id = 0;
+        lbDvd_80018F58(mode->preloaded);
+        if (mode->on_load != NULL) {
+            mode->on_load();
+        }
+        runGameMode_initialized = true;
     }
+
+    mode = runGameMode_current_mode;
+
     while (!sm->pending_mode_change) {
         if (state_machine.get_override != NULL &&
             (override = state_machine.get_override(), override != GM_COUNT))
@@ -318,18 +331,21 @@ u8 runGameMode(u8 mode_kind)
         } else {
             gm_801A4014(mode);
         }
+        if (gm_single_frame_mode) {
+            return mode_kind;
+        }
     }
+    runGameMode_initialized = false;
+    runGameMode_current_mode = NULL;
     if (!gmMainLib_8046B0F0.resetting && mode->on_unload != NULL) {
         mode->on_unload();
     }
     return state_machine.routing.pending_mode;
 }
 
-/// UnclePunch: Scene_Main
-void gm_801A4510(void)
+void gm_801A4510_init(void)
 {
     GameMode* modes;
-    struct stateMachine* gamestate = &state_machine;
     int i;
     PAD_STACK(2 * 4);
 
@@ -349,13 +365,24 @@ void gm_801A4510(void)
         state_machine.routing.curr_mode = GM_BOOT;
     }
     state_machine.routing.prev_mode = GM_COUNT;
+}
 
+void gm_801A4510_step(void)
+{
+    struct stateMachine* gamestate = &state_machine;
+    u8 next_mode = runGameMode(state_machine.routing.curr_mode);
+    if (gmMainLib_8046B0F0.resetting) {
+        gmMainLib_8046B0F0.resetting = false;
+    }
+    gamestate->routing.prev_mode = gamestate->routing.curr_mode;
+    gamestate->routing.curr_mode = next_mode;
+}
+
+/// UnclePunch: Scene_Main
+void gm_801A4510(void)
+{
+    gm_801A4510_init();
     while (true) {
-        u8 next_mode = runGameMode(state_machine.routing.curr_mode);
-        if (gmMainLib_8046B0F0.resetting) {
-            gmMainLib_8046B0F0.resetting = false;
-        }
-        gamestate->routing.prev_mode = gamestate->routing.curr_mode;
-        gamestate->routing.curr_mode = next_mode;
+        gm_801A4510_step();
     }
 }

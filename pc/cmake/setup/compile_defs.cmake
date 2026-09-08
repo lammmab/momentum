@@ -10,7 +10,7 @@ target_compile_definitions(momentum PRIVATE
     PLATFORM_SHIELD=0
     WIDESCREEN_SUPPORT=1
 
-    # version (use GCN USA. ordinals in global.h)
+    # version
     VERSION=VERSION_GCN_USA
     VERSION_GCN_USA=0
     VERSION_GCN_PAL=1

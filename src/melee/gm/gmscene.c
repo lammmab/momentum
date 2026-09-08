@@ -35,7 +35,19 @@ static u64 gm_803DA888[8] = {
 
 u64 gm_803DA8C8[2] = { -1, -1 };
 
-int gm_GetDbPauseFlag(int bit)
+static bool gm_single_frame_mode = false;
+static bool gm_frame_processed = false;
+static bool gm_scene_active = false;
+
+void gm_SetSingleFrameMode(bool enabled)
+{
+    gm_single_frame_mode = enabled;
+    if (!enabled) {
+        gm_scene_active = false;
+    }
+}
+
+bool gm_GetDbPauseFlag(int bit)
 {
     return gm_80479D58.unk_10.x0 & (1ULL << bit);
 }
@@ -273,17 +285,25 @@ void gm_801A4D34(void (*on_frame)(void), UNUSED GameSceneInfo* info)
     int pad_queue_count;
     int i;
     struct gm_80479D58_t* temp_r25;
+    static void (*saved_on_frame)(void) = NULL;
 
     PAD_STACK(28);
 
     temp_r25 = &gm_80479D58;
-    gm_801677C0(&temp_r25->unk_10);
-    gm_80479D58.unk_0 = 0;
-    gm_80479D58.unk_4 = 0;
-    gm_80479D58.unk_8 = 0;
-    gm_80479D58.unk_C = 0;
-    HSD_PadFlushQueue(HSD_PAD_FLUSH_QUEUE_LEAVE1);
-    lb_8001CF18();
+
+    if (!gm_scene_active) {
+        gm_801677C0(&temp_r25->unk_10);
+        gm_80479D58.unk_0 = 0;
+        gm_80479D58.unk_4 = 0;
+        gm_80479D58.unk_8 = 0;
+        gm_80479D58.unk_C = 0;
+        HSD_PadFlushQueue(HSD_PAD_FLUSH_QUEUE_LEAVE1);
+        lb_8001CF18();
+        gm_scene_active = true;
+        saved_on_frame = on_frame;
+    } else {
+        on_frame = saved_on_frame;
+    }
 
     while (temp_r25->unk_C == 0) {
         hsd_80392E80();
@@ -317,6 +337,9 @@ void gm_801A4D34(void (*on_frame)(void), UNUSED GameSceneInfo* info)
                 }
                 if (lb_80019A30(0) && on_frame != NULL) {
                     on_frame();
+                    if (gm_single_frame_mode) {
+                        gm_frame_processed = true;
+                    }
                 }
             }
             if (gm_80479D58.unk_10.x0 != gm_80479D58.unk_10.x1 ||
@@ -361,6 +384,10 @@ void gm_801A4D34(void (*on_frame)(void), UNUSED GameSceneInfo* info)
             if (temp_r25->unk_C != 0) {
                 break;
             }
+            if (gm_single_frame_mode && gm_frame_processed) {
+                gm_frame_processed = false;
+                return;
+            }
         }
         if (temp_r25->unk_C == 2) {
             break;
@@ -381,5 +408,6 @@ void gm_801A4D34(void (*on_frame)(void), UNUSED GameSceneInfo* info)
         HSD_PerfSetTotalTime();
         HSD_PerfInitStat();
     }
+    gm_scene_active = false;
     HSD_VIWaitXFBFlush();
 }

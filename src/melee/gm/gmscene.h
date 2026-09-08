@@ -6,6 +6,7 @@
 #include <melee/gm/types.h>
 #include <sysdolphin/baselib/gobj.h>
 
+/* PC Port */ void gm_SetSingleFrameMode(bool enabled);
 /* 1A45E8 */ bool gm_GetDbPauseFlag(int bit);
 /* 1A4624 */ int gm_801A4624(void);
 /* 1A4634 */ void gm_SetDbPauseFlag(int bit);

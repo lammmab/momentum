@@ -16,6 +16,8 @@
 /* 1A4320 */ u8 gm_GetPreviousGameMode(void);
 /* 1A4330 */ void gm_SetGameModeOverride(u8 (*)(void));
 /* 1A4340 */ bool gm_Is1PMode(u8 mode);
+/* 1A4510 */ void gm_801A4510_init(void);
+/* 1A4510 */ void gm_801A4510_step(void);
 /* 1A4510 */ void gm_801A4510(void);
 
 #endif

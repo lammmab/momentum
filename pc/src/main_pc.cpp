@@ -21,8 +21,10 @@ FILENAME_LOGGER();
 #include "momentum/platform/platform_factory.hpp"
 #include "momentum/core/service_locator.hpp"
 
-void run(int argc, char* argv[], std::unique_ptr<cr::platform::IPlatform>& platform) {
-    //init(argc,argv);
+#include "melee/gm/gmmain.h"
+
+void run(std::unique_ptr<cr::platform::IPlatform>& platform) {
+    melee_init();
 
     constexpr uint64_t FRAME_NS = 1000000000ULL / 30;
     uint64_t lastTickNs = platform->GetTickNS();
@@ -39,7 +41,7 @@ void run(int argc, char* argv[], std::unique_ptr<cr::platform::IPlatform>& platf
 
         VIWaitForRetrace();
         rfRendererBeginFrame();
-        //frame();
+        melee_frame();
         rfRendererEndFrame();
 
         uint64_t elapsed = platform->GetTickNS() - frameStart;
@@ -106,7 +108,7 @@ int main(int argc, char* argv[]) {
     cr::input::Initialize();
     cr::rf::initCard();
 
-    run(argc, argv, platform);
+    run(platform);
 
     platform->Shutdown();
 

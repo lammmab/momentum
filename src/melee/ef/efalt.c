@@ -10,7 +10,11 @@
 #include <sysdolphin/baselib/gobj.h>
 #include <sysdolphin/baselib/jobj.h>
 
-#define EFALT_VA_ARG(t) va_arg(vlist_arg, t)
+#if PLATFORM_PC
+#define EFALT_VA_ARG(t) (va_arg(vlist_arg, t))
+#else
+#define EFALT_VA_ARG(t) (*((t*) __va_arg(vlist_arg, _var_arg_typeof(t))))
+#endif
 
 extern volatile u32 efLib_LoadKind;
 extern volatile s32 efLib_AnimCount;
@@ -25,7 +29,17 @@ void* efAlt_Spawn(s32 gfx_id, HSD_GObj* gobj, va_list vlist_arg)
     Vec3 scale;
     f32* value_ptr;
     void* ret_obj;
+#if PLATFORM_PC
+    va_list vlist_arg;
+#else
+    void* vlist_arg;
+#endif
 
+#if PLATFORM_PC
+    va_copy(vlist_arg, vlist);
+#else
+    vlist_arg = vlist;
+#endif
     ret_obj = NULL;
     efLib_LoadKind = EF_LOADKIND_SYNC;
     PAD_STACK(80);
