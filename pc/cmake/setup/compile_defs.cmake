@@ -21,3 +21,14 @@ target_compile_definitions(momentum PRIVATE
     "APP_VERSION=\"${APP_VERSION}\""
     "MAC_BUNDLE_ID=\"${MAC_BUNDLE_ID}\""
 )
+
+if(WIN32)
+    target_compile_definitions(courage PRIVATE PLATFORM_WINDOWS=1)
+else()
+    target_compile_definitions(courage PRIVATE PLATFORM_POSIX=1)
+    if(APPLE)
+        target_compile_definitions(courage PRIVATE PLATFORM_APPLE=1)
+    elseif(UNIX)
+        target_compile_definitions(courage PRIVATE PLATFORM_LINUX=1)
+    endif()
+endif()
