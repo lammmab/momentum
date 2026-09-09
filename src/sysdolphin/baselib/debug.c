@@ -11,6 +11,45 @@ struct DebugContext {
 
 static ReportCallback reportCallback;
 static PanicCallback panicCallback;
+
+#if PLATFORM_PC
+void HSD_LogInit(void) {} // stub
+
+static void report_func(const char* msg, size_t size)
+{
+    if (reportCallback != NULL) {
+        reportCallback((u8*)msg, size);
+    }
+
+    fwrite(msg, 1, size, stdout);
+}
+
+void __assert(char* str, u32 line, char* msg)
+{
+    fprintf(stderr, "assertion \"%s\" failed\n", msg);
+    HSD_Panic(str, line, "");
+}
+
+void HSD_Panic(char* file, u32 line, char* msg)
+{
+    if (panicCallback != NULL) {
+        panicCallback(NULL);
+    }
+
+    fprintf(stderr, "%s in %s on line %d.\n", msg, file, line);
+}
+
+void HSD_SetReportCallback(ReportCallback cb)
+{
+    reportCallback = cb;
+}
+
+void HSD_SetPanicCallback(PanicCallback cb)
+{
+    panicCallback = cb;
+}
+
+#else
 static __io_proc logFunc;
 
 #ifdef MUST_MATCH
@@ -61,3 +100,4 @@ void HSD_SetPanicCallback(PanicCallback cb)
 {
     panicCallback = cb;
 }
+#endif

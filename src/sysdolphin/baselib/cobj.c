@@ -13,7 +13,6 @@
 #include "video.h"
 #include "wobj.h"
 #include <dolphin/gx.h>
-#include <dolphin/gx/GXTransform.h>
 #include <dolphin/mtx.h>
 #include <dolphin/vi.h> // IWYU pragma: keep
 

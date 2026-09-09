@@ -6,10 +6,7 @@
 #include "tev.h"
 #include "texp.h"
 #include "util.h"
-#include <dolphin/gx/GXEnum.h>
-#include <dolphin/gx/GXGeometry.h>
-#include <dolphin/gx/GXPixel.h>
-#include <dolphin/gx/GXTev.h>
+#include <dolphin/gx.h>
 
 static GXColor dark_matter = { 0x00, 0x00, 0x00, 0xFF };
 

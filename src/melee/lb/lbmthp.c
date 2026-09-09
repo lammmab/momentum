@@ -49,7 +49,7 @@ typedef struct THPDecComp {
     /* 0x90 */ u32 unk_90;
     /* 0x94 */ s32 unk_94;
     /* 0x98 */ s32 unk_98;
-    /* 0x9C */ THPDec_8032FD40_Data unk_9C;
+    /* 0x9C */ THPDec_ImageInfo unk_9C;
     /* 0xA8 */ u16 unk_A8;
     /* 0xAA */ u16 unk_AA;
     /* 0xAC */ u8 unk_AC;
@@ -212,13 +212,13 @@ size_t fn_8001EBF0(THPDecComp* data)
     width = data->width;
     height = data->height;
     wh = width * height;
-    data->unk_9C.val1 = width;
+    data->unk_9C.width = width;
     height = data->height;
-    data->unk_9C._pad = height;
+    data->unk_9C.height = height;
 
-    data->unk_9C.val2 = 4;
+    data->unk_9C.samplingMode = 4;
 
-    data->unk_9C.val0 = 0;
+    data->unk_9C.offset = 0;
 
     size += wh;
 
@@ -226,7 +226,7 @@ size_t fn_8001EBF0(THPDecComp* data)
     size += wh_div4;
     size += wh_div4;
 
-    size += THPDec_8032FD40(&data->unk_9C, data->height);
+    size += THPDec_Get420BufferSize(&data->unk_9C, data->height);
 
     data->unk_7C = 0;
     data->unk_78 = 0;
