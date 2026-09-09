@@ -179,8 +179,8 @@ inline void crLogPrint(const char* prefix, const char* fmt, Args&&... args) {
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/async.h>
 
-#include "cr/core/paths.hpp"
-#include "cr/core/config/config.hpp"
+#include "momentum/core/paths.hpp"
+#include "momentum/core/config/config.hpp"
 
 // Core macros: always active, write to the per-file console logger
 

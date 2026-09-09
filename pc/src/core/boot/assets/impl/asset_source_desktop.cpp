@@ -1,8 +1,8 @@
-#include "cr/boot/assets/impl/asset_source_desktop.hpp"
+#include "momentum/boot/assets/impl/asset_source_desktop.hpp"
 
-#include "cr/boot/assets/setup.hpp"
-#include "cr/core/config/config.hpp"
-#include "cr/utility/log.hpp"
+#include "momentum/boot/assets/setup.hpp"
+#include "momentum/core/config/config.hpp"
+#include "momentum/utility/log.hpp"
 
 #include <atomic>
 #include <cstdio>
@@ -31,7 +31,7 @@ void fileDialogCallback(void* userdata, const char* const* filelist, int /*filte
     result->mDone.store(true, std::memory_order_release);
 }
 
-bool waitForDialog(cr::platform::IPlatform& platform, FileDialogResult& result) {
+bool waitForDialog(momentum::platform::IPlatform& platform, FileDialogResult& result) {
     while (!result.mDone.load(std::memory_order_acquire)) {
         platform.PumpEvents();
         platform.Delay(10);
@@ -41,8 +41,8 @@ bool waitForDialog(cr::platform::IPlatform& platform, FileDialogResult& result) 
 
 } // namespace
 
-namespace cr::boot::assets::impl {
-    AssetSourceDesktop::AssetSourceDesktop(cr::platform::IPlatform& platform)
+namespace momentum::boot::assets::impl {
+    AssetSourceDesktop::AssetSourceDesktop(momentum::platform::IPlatform& platform)
         : mPlatform(platform) {}
 
     bool AssetSourceDesktop::EnsureDataDirectory() {
@@ -55,7 +55,7 @@ namespace cr::boot::assets::impl {
         }
 
         mPlatform.ShowSimpleMessageBox(
-            cr::platform::IPlatform::MessageBoxFlags::MSG_INFORMATION,
+            momentum::platform::IPlatform::MessageBoxFlags::MSG_INFORMATION,
             GAME_TITLE,
             "Data directory not chosen.\n\n"
             "Please select your desired data directory. This is where your extracted game disc, mods, crash dumps, logs, and all data will live!",
@@ -79,13 +79,13 @@ namespace cr::boot::assets::impl {
         }
 
         mPlatform.ShowSimpleMessageBox(
-            cr::platform::IPlatform::MessageBoxFlags::MSG_INFORMATION,
+            momentum::platform::IPlatform::MessageBoxFlags::MSG_INFORMATION,
             GAME_TITLE,
             "Game assets not found.\n\n"
             "Please select your Twilight Princess GameCube disc file.",
             nullptr);
 
-        cr::platform::IPlatform::FileDialogFilter filters[1];
+        momentum::platform::IPlatform::FileDialogFilter filters[1];
         filters[0].mName = "GameCube Disc Image";
         filters[0].mPattern = "iso;gcm;ciso;gcz;wia;rvz;wbfs;nfs;tgc";
 
@@ -107,7 +107,7 @@ namespace cr::boot::assets::impl {
             }
 
             mPlatform.ShowSimpleMessageBox(
-                cr::platform::IPlatform::MessageBoxFlags::MSG_ERROR,
+                momentum::platform::IPlatform::MessageBoxFlags::MSG_ERROR,
                 "Invalid ISO",
                 "Not a recognized Twilight Princess disc image.\n"
                 "Supported formats: ISO, CISO, GCZ, WIA, RVZ, WBFS, NFS, TGC\n\n"

@@ -7,11 +7,11 @@
 
 #include "rainfall/input/backend/input_backend.h"
 
-#include "cr/core/input/platform.hpp"
+#include "momentum/core/input/platform.hpp"
 
 #define BIND(action, slot, src, code) bindings[action][slot] = { src, code }
 
-namespace cr::input::platform {
+namespace momentum::input::platform {
 
 void resetDefaults(RF_InputBinding bindings[GC_ACTION_COUNT][2]) {
     for (int i = 0; i < GC_ACTION_COUNT; i++) {

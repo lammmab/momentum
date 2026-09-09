@@ -1,9 +1,9 @@
-#include "cr/platform/common/emergency_exit.hpp"
+#include "momentum/platform/common/emergency_exit.hpp"
 
 #include <cstdlib>
 #include <csignal>
 
-namespace cr::platform::common {
+namespace momentum::platform::common {
     void emergency_exit::HandleEmergencyExit(int signal) {
         (void)signal;
 

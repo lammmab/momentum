@@ -1,10 +1,10 @@
-#include "cr/platform/impl/platform_desktop.hpp"
+#include "momentum/platform/impl/platform_desktop.hpp"
 
-#include "cr/platform/common/emergency_exit.hpp"
-#include "cr/platform/common/sdl.hpp"
-#include "cr/core/config/config.hpp"
-#include "cr/core/input/setup.hpp"
-#include "cr/utility/log.hpp"
+#include "momentum/platform/common/emergency_exit.hpp"
+#include "momentum/platform/common/sdl.hpp"
+#include "momentum/core/config/config.hpp"
+#include "momentum/core/input/setup.hpp"
+#include "momentum/utility/log.hpp"
 
 #include <csignal>
 #include <cstring>
@@ -13,11 +13,11 @@
 
 CR_FILENAME_LOGGER();
 
-namespace cr::platform::impl {
+namespace momentum::platform::impl {
     bool PlatformDesktop::Initialize() {
         InstallCrashHandler();
         InstallEmergencyExit();
-        cr::platform::common::sdl::InitializeSDLMeta();
+        momentum::platform::common::sdl::InitializeSDLMeta();
         OnInitialized();
         return true;
     }
@@ -41,7 +41,7 @@ namespace cr::platform::impl {
             *a = 1.0f;
         };
 
-        config.onEvent = cr::input::ProcessEvent;
+        config.onEvent = momentum::input::ProcessEvent;
 
         config.backendChoice = RF_BACKEND_CHOICE_AUTO;
         if (backend == "opengl") {
@@ -67,9 +67,9 @@ namespace cr::platform::impl {
     }
 
     void PlatformDesktop::InstallEmergencyExit() {
-        std::signal(SIGINT, cr::platform::common::emergency_exit::HandleEmergencyExit);
+        std::signal(SIGINT, momentum::platform::common::emergency_exit::HandleEmergencyExit);
 #ifdef SIGTERM
-        std::signal(SIGTERM, cr::platform::common::emergency_exit::HandleEmergencyExit);
+        std::signal(SIGTERM, momentum::platform::common::emergency_exit::HandleEmergencyExit);
 #endif
     }
 

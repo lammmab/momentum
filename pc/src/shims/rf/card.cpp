@@ -252,7 +252,7 @@ CRMemcardBackend s_backend;
 
 } // namespace
 
-void cr::rf::initCard()
+void momentum::rf::initCard()
 {
     Paths::EnsureDirectory(
         Paths::UserDirFolder(Config::paths.save_folder.value));

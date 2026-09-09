@@ -1,7 +1,7 @@
-#include "cr/platform/impl/platform_windows.hpp"
+#include "momentum/platform/impl/platform_windows.hpp"
 
-#include "cr/platform/common/crash_handler.hpp"
-#include "cr/utility/log.hpp"
+#include "momentum/platform/common/crash_handler.hpp"
+#include "momentum/utility/log.hpp"
 
 #include <stdio.h>
 #include <string.h>
@@ -25,7 +25,7 @@ static char sCrashDumpDir[512] = {};
 static wchar_t sCrashDumpDirW[512] = {};
 static wchar_t sCfgPathW[512] = {};
 
-namespace cr::platform::impl {
+namespace momentum::platform::impl {
 
     void PlatformWindows::Shutdown() {
         ExitProcess(0);
@@ -55,15 +55,15 @@ namespace cr::platform::impl {
     }
 
     void PlatformWindows::InstallCrashHandler() {
-        std::string dir = cr::platform::common::crash_handler::GetCrashDumpDirectory();
+        std::string dir = momentum::platform::common::crash_handler::GetCrashDumpDirectory();
         snprintf(sCrashDumpDir, sizeof(sCrashDumpDir), "%s", dir.c_str());
         MultiByteToWideChar(CP_UTF8, 0, sCrashDumpDir, -1, sCrashDumpDirW, _countof(sCrashDumpDirW));
 
-        std::string cfgUtf8 = cr::platform::common::crash_handler::GetConfigPath();
+        std::string cfgUtf8 = momentum::platform::common::crash_handler::GetConfigPath();
         MultiByteToWideChar(CP_UTF8, 0, cfgUtf8.c_str(), -1, sCfgPathW, _countof(sCfgPathW));
 
         InitializeCriticalSection(&sLogLock);
-        cr::platform::common::crash_handler::sLogLockInit = true;
+        momentum::platform::common::crash_handler::sLogLockInit = true;
         SetUnhandledExceptionFilter(PlatformWindows::CrashHandler);
         LOG_INFO("Crash handler armed (dumps -> {})\n", sCrashDumpDir);
     }
@@ -266,7 +266,7 @@ namespace cr::platform::impl {
             WriteGameState(log);
             WriteConfig(log);
             WriteSystemInfo(log);
-            cr::platform::common::crash_handler::WriteLogRing(log);
+            momentum::platform::common::crash_handler::WriteLogRing(log);
 
             fprintf(log, "\n=== END CRASH REPORT ===\n");
             fclose(log);

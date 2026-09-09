@@ -1,12 +1,12 @@
-#include "cr/platform/common/crash_handler.hpp"
+#include "momentum/platform/common/crash_handler.hpp"
 
-#include "cr/core/config/config.hpp"
-#include "cr/core/paths.hpp"
-#include "cr/cr.hpp"
+#include "momentum/core/config/config.hpp"
+#include "momentum/core/paths.hpp"
+#include "momentum/cr.hpp"
 
 #include <filesystem>
 
-namespace cr::platform::common {
+namespace momentum::platform::common {
     char crash_handler::sLogRing[LOG_RING_SIZE][LOG_LINE_LEN];
     int  crash_handler::sLogRingPos   = 0;
     int  crash_handler::sLogRingCount = 0;

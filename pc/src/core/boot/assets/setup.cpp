@@ -1,12 +1,12 @@
-#include "cr/boot/assets/setup.hpp"
-#include "cr/boot/assets/asset_factory.hpp"
+#include "momentum/boot/assets/setup.hpp"
+#include "momentum/boot/assets/asset_factory.hpp"
 
-#include "cr/core/config/config.hpp"
-#include "cr/core/paths.hpp"
-#include "cr/core/service_locator.hpp"
-#include "cr/platform/iplatform.hpp"
-#include "cr/utility/log.hpp"
-#include "cr/utility/region_format.hpp"
+#include "momentum/core/config/config.hpp"
+#include "momentum/core/paths.hpp"
+#include "momentum/core/service_locator.hpp"
+#include "momentum/platform/iplatform.hpp"
+#include "momentum/utility/log.hpp"
+#include "momentum/utility/region_format.hpp"
 
 #include "gcesfa/gcesfa.hpp"
 #include "gcesfa/logger.hpp"
@@ -23,7 +23,7 @@
 
 CR_FILENAME_LOGGER();
 
-esfa::interface::Registry cr::assets::registry{};
+esfa::interface::Registry momentum::assets::registry{};
 
 namespace {
 
@@ -41,7 +41,7 @@ bool dataExists() {
            std::filesystem::directory_iterator();
 }
 
-bool siphonExtract(const char* path, const std::string& root, cr::platform::IPlatform& platform) {
+bool siphonExtract(const char* path, const std::string& root, momentum::platform::IPlatform& platform) {
     LOG_INFO("Extracting GameCube disc image: {}", path);
     SiphonError err = siphon_disc_extract(
         path, root.c_str(), REGIONS, NUM_REGIONS,
@@ -50,7 +50,7 @@ bool siphonExtract(const char* path, const std::string& root, cr::platform::IPla
     if (err != SIPHON_OK) {
         LOG_INFO("Disc extraction failed with code {}", (int)err);
         platform.ShowSimpleMessageBox(
-            cr::platform::IPlatform::MessageBoxFlags::MSG_ERROR,
+            momentum::platform::IPlatform::MessageBoxFlags::MSG_ERROR,
             "Extraction Failed",
             "Failed to extract the game disc image.",
             nullptr);
@@ -142,17 +142,17 @@ void saveMaster(const std::filesystem::path& dir) {
 
 bool runGCESFA(const std::filesystem::path& dir) {
     gcesfa::setLogger(gcesfaLog);
-    gcesfa::RegisterDefaultFormats(cr::assets::registry);
+    gcesfa::RegisterDefaultFormats(momentum::assets::registry);
 
     gcesfa::search::SearchConfig searchConfig;
     searchConfig.match = [](const std::filesystem::path&) -> gcesfa::search::matchResult {
         return {false, ""};
     };
 
-    auto catalog = gcesfa::BuildAssetCatalog(cr::assets::registry, dir, searchConfig);
+    auto catalog = gcesfa::BuildAssetCatalog(momentum::assets::registry, dir, searchConfig);
 
     try {
-        gcesfa::SwapAssets(cr::assets::registry, dir, catalog);
+        gcesfa::SwapAssets(momentum::assets::registry, dir, catalog);
         return true;
     } catch (const std::exception& e) {
         const auto progress = gcesfa::IsSwapped(dir);
@@ -170,7 +170,7 @@ bool runGCESFA(const std::filesystem::path& dir) {
 
 } // namespace
 
-bool cr::boot::assets::IsValidDiscImage(const char* path) {
+bool momentum::boot::assets::IsValidDiscImage(const char* path) {
     FILE* f = fopen(path, "rb");
     if (!f) {
         return false;
@@ -196,14 +196,14 @@ bool cr::boot::assets::IsValidDiscImage(const char* path) {
     return false;
 }
 
-bool cr::assets::setup(const std::string& disc_location) {
-    cr::platform::IPlatform* platform = cr::core::service_locator::GetPlatform();
+bool momentum::assets::setup(const std::string& disc_location) {
+    momentum::platform::IPlatform* platform = momentum::core::service_locator::GetPlatform();
     if (!platform) {
         LOG_ERROR("Asset setup requires a platform.");
         return false;
     }
 
-    auto source = cr::boot::assets::CreateAssetSource(*platform);
+    auto source = momentum::boot::assets::CreateAssetSource(*platform);
     if (!source->EnsureDataDirectory()) {
         return false;
     }
@@ -245,7 +245,7 @@ bool cr::assets::setup(const std::string& disc_location) {
         if (!source->AcquireDiscImage(isoPath)) {
             return false;
         }
-    } else if (!cr::boot::assets::IsValidDiscImage(isoPath.c_str())) {
+    } else if (!momentum::boot::assets::IsValidDiscImage(isoPath.c_str())) {
         LOG_INFO("Invalid disc location: {}", isoPath);
         return false;
     }

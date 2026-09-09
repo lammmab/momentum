@@ -1,6 +1,6 @@
-#include "cr/core/config/input/input_config.hpp"
-#include "cr/core/config/config.hpp"
-#include "cr/core/input/platform.hpp"
+#include "momentum/core/config/input/input_config.hpp"
+#include "momentum/core/config/config.hpp"
+#include "momentum/core/input/platform.hpp"
 #include "rainfall/input/local_source.hpp"
 
 #include <rainfall/input/backend/input_backend.h>
@@ -97,7 +97,7 @@ void InputConfig::WriteSection(inih::INIReader& r) {
 
 void InputConfig::resetDefaults() {
     background_input = false;
-    cr::input::platform::resetDefaults(bindings);
+    momentum::input::platform::resetDefaults(bindings);
 }
 
 void InputConfig::registerWithRainfall() const {
@@ -120,11 +120,11 @@ const char* InputConfig::getActionName(int action) {
 }
 
 const char* InputConfig::getBindingDisplayName(RF_InputBinding binding) {
-    return cr::input::platform::getDisplayName(binding);
+    return momentum::input::platform::getDisplayName(binding);
 }
 
 bool InputConfig::isListenCandidate(int scancode) {
-    return cr::input::platform::isListenCandidate(scancode);
+    return momentum::input::platform::isListenCandidate(scancode);
 }
 
 void InputConfig::setBinding(int action, int slot, RF_InputBinding binding) {

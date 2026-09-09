@@ -6,7 +6,7 @@
 #include "rainfall/render/rf/renderer.h"
 
 namespace momentum::platform {
-    class IPlatform : public cr::utility::Castable {
+    class IPlatform : public momentum::utility::Castable {
     public:
         struct FileDialogFilter {
             const char* mName;

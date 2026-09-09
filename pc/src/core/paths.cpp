@@ -1,9 +1,9 @@
-#include "cr/core/paths.hpp"
-#include "cr/core/config/config.hpp"
+#include "momentum/core/paths.hpp"
+#include "momentum/core/config/config.hpp"
 #include <rainfall/platform.h>
 
 #ifdef _WIN32
-#include "cr/core/platform/windows.hpp"
+#include "momentum/core/platform/windows.hpp"
 FILE* pc_fopen(const char* path, const char* mode) {
     wchar_t wpath[1024];
     wchar_t wmode[16];

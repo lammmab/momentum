@@ -1,14 +1,14 @@
-#include "cr/core/service_locator.hpp"
-#include "cr/utility/log.hpp"
+#include "momentum/core/service_locator.hpp"
+#include "momentum/utility/log.hpp"
 
 CR_FILENAME_LOGGER();
 
 namespace {
-    cr::platform::IPlatform* sPlatform = nullptr;
+    momentum::platform::IPlatform* sPlatform = nullptr;
 }
 
-namespace cr::core::service_locator {
-    cr::platform::IPlatform* GetPlatform() {
+namespace momentum::core::service_locator {
+    momentum::platform::IPlatform* GetPlatform() {
         if(sPlatform == nullptr) {
             LOG_ERROR("Platform has not been provided to service locator yet!");
         }
@@ -16,7 +16,7 @@ namespace cr::core::service_locator {
         return sPlatform;
     }
 
-    void ProvidePlatform(cr::platform::IPlatform* platform) {
+    void ProvidePlatform(momentum::platform::IPlatform* platform) {
         sPlatform = platform;
     }
 }

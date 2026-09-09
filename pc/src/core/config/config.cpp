@@ -1,4 +1,4 @@
-#include "cr/core/config/config.hpp"
+#include "momentum/core/config/config.hpp"
 
 #include <stdexcept>
 #include <algorithm>
@@ -9,10 +9,10 @@
 #include <unistd.h>
 #endif
 
-#include "cr/core/config/input/input_config.hpp"
-#include "cr/core/paths.hpp"
-#include "cr/utility/log.hpp"
-#include "cr/core/service_locator.hpp"
+#include "momentum/core/config/input/input_config.hpp"
+#include "momentum/core/paths.hpp"
+#include "momentum/utility/log.hpp"
+#include "momentum/core/service_locator.hpp"
 
 CR_FILENAME_LOGGER();
 
@@ -106,7 +106,7 @@ bool Config::parseColor(const std::string& str, uint8_t& r, uint8_t& g, uint8_t&
     }
 
     if (lowerStr == "rainbow") {
-        float hue = std::fmod((float)cr::core::service_locator::GetPlatform()->GetTicks() * 0.0003f, 1.0f);
+        float hue = std::fmod((float)momentum::core::service_locator::GetPlatform()->GetTicks() * 0.0003f, 1.0f);
         float h = hue * 6.0f;
         float x = 1.0f - std::fabs(std::fmod(h, 2.0f) - 1.0f);
         float r1 = 0, g1 = 0, b1 = 0;

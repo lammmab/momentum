@@ -1,7 +1,7 @@
-#include "cr/platform/impl/platform_posix.hpp"
+#include "momentum/platform/impl/platform_posix.hpp"
 
-#include "cr/platform/common/crash_handler.hpp"
-#include "cr/utility/log.hpp"
+#include "momentum/platform/common/crash_handler.hpp"
+#include "momentum/utility/log.hpp"
 
 #include <stdio.h>
 #include <string.h>
@@ -36,7 +36,7 @@ static alignas(16) char sAltStack[65536];
 static char sCrashDumpDir[512] = "";
 static pthread_t sMainThread;
 
-namespace cr::platform::impl {
+namespace momentum::platform::impl {
 
     void PlatformPosix::Shutdown() {
         _Exit(0);
@@ -54,10 +54,10 @@ namespace cr::platform::impl {
 
     void PlatformPosix::InstallCrashHandler() {
         sMainThread = pthread_self();
-        std::string dir = cr::platform::common::crash_handler::GetCrashDumpDirectory();
+        std::string dir = momentum::platform::common::crash_handler::GetCrashDumpDirectory();
         snprintf(sCrashDumpDir, sizeof(sCrashDumpDir), "%s", dir.c_str());
 
-        cr::platform::common::crash_handler::sLogLockInit = true;
+        momentum::platform::common::crash_handler::sLogLockInit = true;
 
         stack_t ss = {};
         ss.ss_sp    = sAltStack;
@@ -136,7 +136,7 @@ namespace cr::platform::impl {
     }
 
     void PlatformPosix::WriteConfig(FILE* log) {
-        const std::string path = cr::platform::common::crash_handler::GetConfigPath();
+        const std::string path = momentum::platform::common::crash_handler::GetConfigPath();
         FILE* cfg = fopen(path.c_str(), "r");
         if (!cfg) {
             fprintf(log, "\nConfig: (no config.ini found)\n");
@@ -269,7 +269,7 @@ namespace cr::platform::impl {
             WriteGameState(log);
             WriteConfig(log);
             WriteSystemInfo(log);
-            cr::platform::common::crash_handler::WriteLogRing(log);
+            momentum::platform::common::crash_handler::WriteLogRing(log);
 
             fprintf(log, "\n=== END CRASH REPORT ===\n");
             fclose(log);

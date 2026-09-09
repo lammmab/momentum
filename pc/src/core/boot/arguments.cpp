@@ -1,8 +1,8 @@
 #include "external/CLI11.hpp"
 
-#include "cr/boot/arguments.hpp"
+#include "momentum/boot/arguments.hpp"
 
-namespace cr::args {
+namespace momentum::args {
 
 Config parse(int& argc, char** argv) {
     CLI::App app{"Momentum"};

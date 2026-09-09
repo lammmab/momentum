@@ -23,7 +23,7 @@ FILENAME_LOGGER();
 
 #include "melee/gm/gmmain.h"
 
-void run(std::unique_ptr<cr::platform::IPlatform>& platform) {
+void run(std::unique_ptr<momentum::platform::IPlatform>& platform) {
     melee_init();
 
     constexpr uint64_t FRAME_NS = 1000000000ULL / 30;
@@ -37,7 +37,7 @@ void run(std::unique_ptr<cr::platform::IPlatform>& platform) {
         if (dt < 0.0f) dt = 0.0f;
         if (dt > 0.25f) dt = 0.25f;*/
 
-        cr::input::Tick();
+        momentum::input::Tick();
 
         VIWaitForRetrace();
         rfRendererBeginFrame();
@@ -64,19 +64,19 @@ int main(int argc, char* argv[]) {
     spdlog::set_level(spdlog::level::debug);
 #endif
 
-    std::unique_ptr<cr::platform::IPlatform> platform = cr::platform::CreatePlatform();
+    std::unique_ptr<momentum::platform::IPlatform> platform = momentum::platform::CreatePlatform();
     if (!platform) {
         LOG_ERROR("Failed to create platform, aborting...");
         return 1;
     }
-    cr::core::service_locator::ProvidePlatform(platform.get());
+    momentum::core::service_locator::ProvidePlatform(platform.get());
 
     if (!platform->Initialize()) {
         LOG_ERROR("Failed to initialize platform {}, aborting...", platform->GetName().c_str());
         return 1;
     }
 
-    cr::args::Config config = cr::args::parse(argc, argv);
+    momentum::args::Config config = momentum::args::parse(argc, argv);
 
     if (!Config::ConfigExists()) {
         Config::WriteConfig();
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
         Config::ParseConfig();
     }
 
-    if (!cr::assets::setup(config.disc_location)) {
+    if (!momentum::assets::setup(config.disc_location)) {
         LOG_ERROR("Asset setup failed.");
         exit(1);
     }
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
     std::string gameData = Paths::UserDirFolder(Config::paths.game_folder).string();
     DVDSetRoot(gameData.c_str());
 
-    /*if (!cr::dol::init(gameData.c_str())) {
+    /*if (!momentum::dol::init(gameData.c_str())) {
         LOG_INFO("DOL assets failed to initialize..?");
         exit(1);
     }*/
@@ -105,8 +105,8 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 
-    cr::input::Initialize();
-    cr::rf::initCard();
+    momentum::input::Initialize();
+    momentum::rf::initCard();
 
     run(platform);
 

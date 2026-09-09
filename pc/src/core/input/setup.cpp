@@ -1,16 +1,16 @@
-#include "cr/core/input/setup.hpp"
+#include "momentum/core/input/setup.hpp"
 
 #include "rainfall/input/backend/input_backend.h"
 #include "rainfall/input/gamepad.h"
 #include "rainfall/input/local_source.hpp"
 
-#include "cr/core/config/config.hpp"
+#include "momentum/core/config/config.hpp"
 
-void cr::input::ProcessEvent(void* event) {
+void momentum::input::ProcessEvent(void* event) {
     rfInputProcessEvent(event);
 }
 
-void cr::input::Initialize() {
+void momentum::input::Initialize() {
     rfGamepadInitAttached();
     rainfall::pad::InitLocalSources();
     rainfall::pad::UpdateGamepadAssignments();
@@ -19,7 +19,7 @@ void cr::input::Initialize() {
     Config::input.registerWithRainfall();
 }
 
-void cr::input::Tick() {
+void momentum::input::Tick() {
     rainfall::pad::TickAll();
     rainfall::pad::UpdateGamepadAssignments();
 }

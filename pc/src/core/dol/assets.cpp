@@ -1,4 +1,4 @@
-#include "cr/core/dol/assets.hpp"
+#include "momentum/core/dol/assets.hpp"
 #include "rainfall/platform/pc.h"
 
 #include <stdint.h>
@@ -8,7 +8,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "cr/utility/log.hpp"
+#include "momentum/utility/log.hpp"
 
 CR_FILENAME_LOGGER();
 
@@ -279,7 +279,7 @@ bool LoadRelByName(const char* relName, unsigned char** outBuf, size_t* outSize)
 
 } // namespace
 
-namespace cr::dol {
+namespace momentum::dol {
 
 bool init(const char* gameDataDir) {
     LOG_INFO("init: enter dir={}", gameDataDir ? gameDataDir : "(null)");
