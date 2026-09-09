@@ -35,6 +35,8 @@
 #include <sysdolphin/baselib/tobj.h>
 #include <sysdolphin/baselib/wobj.h>
 
+#include <Runtime/runtime.h>
+
 /// @todo .sdata2 order hack
 static inline void gm_1884_sdata2_order(void)
 {

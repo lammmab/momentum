@@ -3,7 +3,6 @@
 #include <Runtime/platform.h>
 #include <Runtime/Gecko_setjmp.h>
 
-#include <setjmp.h>
 #include <stdarg.h>
 
 #include "grdatfiles.h"

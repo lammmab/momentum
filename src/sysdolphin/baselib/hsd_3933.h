@@ -10,6 +10,6 @@
 /* 393844 */ void hsd_80393844(void);
 /* 393A04 */ bool hsd_80393A04(void);
 /* 393A54 */ void hsd_80393A54(int);
-/* 393A5C */ int hsd_80393A5C(char*, int, int);
+/* 393A5C */ int hsd_80393A5C(char*, void*, int);
 
 #endif
