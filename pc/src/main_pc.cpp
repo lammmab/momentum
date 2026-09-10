@@ -7,12 +7,16 @@
 
 #include "rainfall/render/rf/renderer.h"
 
-#include "momentum/boot/arguments.hpp"
+#include "momentum/core/boot/arguments.hpp"
 #include "momentum/utility/log.hpp"
+
+#include "momentum/core/assets/setup.hpp"
+#include "momentum/core/input/setup.hpp"
+
 FILENAME_LOGGER();
 
 #include "momentum/momentum.hpp"
-//#include "momentum/core/dol/assets.hpp"
+#include "momentum/core/dol/assets.h"
 #include "momentum/core/paths.hpp"
 
 #include "dolphin/dvd.h"
@@ -78,10 +82,10 @@ int main(int argc, char* argv[]) {
 
     momentum::args::Config config = momentum::args::parse(argc, argv);
 
-    if (!Config::ConfigExists()) {
-        Config::WriteConfig();
+    if (!Config::configExists()) {
+        Config::writeConfig();
     } else {
-        Config::ParseConfig();
+        Config::parseConfig();
     }
 
     if (!momentum::assets::setup(config.disc_location)) {
@@ -92,10 +96,10 @@ int main(int argc, char* argv[]) {
     std::string gameData = Paths::UserDirFolder(Config::paths.game_folder).string();
     DVDSetRoot(gameData.c_str());
 
-    /*if (!momentum::dol::init(gameData.c_str())) {
+    if (!momentum::dol::init(gameData.c_str())) {
         LOG_INFO("DOL assets failed to initialize..?");
         exit(1);
-    }*/
+    }
 
     std::string shader_cache = Paths::UserDirFolder(Config::paths.shader_cache).string();
     LOG_INFO("Shader cache: {}", shader_cache);

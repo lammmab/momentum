@@ -11,7 +11,7 @@
 
 #include <SDL3/SDL.h>
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
 namespace momentum::platform::impl {
     bool PlatformDesktop::Initialize() {
@@ -28,8 +28,8 @@ namespace momentum::platform::impl {
         config.shaderCacheDir = cacheDir.c_str();
         config.gameWidth      = 640;
         config.gameHeight     = 480;
-        config.windowWidth    = Config::display.width;
-        config.windowHeight   = Config::display.height;
+        config.windowWidth    = Config::display.window_width;
+        config.windowHeight   = Config::display.window_height;
         config.renderScale    = Config::display.render_scale;
         config.windowMode     = Config::display.window_mode;
         config.windowTitle    = APP_NAME;

@@ -18,7 +18,7 @@
 
 #pragma comment(lib, "dbghelp.lib")
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
 static CRITICAL_SECTION sLogLock;
 static char sCrashDumpDir[512] = {};

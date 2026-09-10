@@ -1,6 +1,6 @@
 #pragma once
 
-#include "momentum/boot/assets/iasset_source.hpp"
+#include "momentum/core/assets/iasset_source.hpp"
 #include "momentum/platform/iplatform.hpp"
 
 #include <string>

@@ -1,0 +1,11 @@
+// FIELD_STRING(c_name,        cpp_path)
+// FIELD_BOOL(c_name,          cpp_path)
+
+FIELD_STRING(data_path,        Config::paths.data_path)
+FIELD_STRING(game_folder,      Config::paths.game_folder)
+FIELD_STRING(log_dumps,        Config::paths.log_dumps)
+FIELD_STRING(crash_dumps,      Config::paths.crash_dumps)
+FIELD_STRING(shader_cache,     Config::paths.shader_cache)
+FIELD_STRING(saves_folder,     Config::paths.saves_folder)
+
+FIELD_BOOL(skip_intro_video,   Config::enhancements.skip_intro_video)

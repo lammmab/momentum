@@ -165,21 +165,12 @@ void swapDataSectors(u8* cardData) {
 
 class CRMemcardBackend final : public card::MemcardBackend {
 protected:
-    std::string resolveGciPath(int, std::string_view name) override {
-        std::string fileName(name);
-        if (fileName.empty() || fileName == "gczelda2") {
-            fileName = Config::paths.active_save.value;
-        }
-        if (fileName.empty()) {
-            fileName = "gczelda2";
-        }
-
-        const std::string folder = Paths::UserDirFolder(Config::paths.save_folder.value).string();
-        if (fileName.size() >= 4 && fileName.compare(fileName.size() - 4, 4, kSaveExtension) == 0) {
-            return folder + "/" + fileName;
-        }
-        return folder + "/" + fileName + kSaveExtension;
-    }
+	std::string resolveGciPath(int /*channel*/, std::string_view name) override
+	{
+		return (Paths::UserDirFolder(Config::paths.saves_folder) /
+				(std::string(name) + ".gci"))
+			.string();
+	}
 
     bool isRecognizedHeader(const u8 header[card::kGciHeaderSize]) override {
         return isRecognizedGameCode(header, header + 4);
@@ -240,7 +231,7 @@ protected:
     }
 
     void ensureStorage(int) override {
-        Paths::EnsureDirectory(Paths::UserDirFolder(Config::paths.save_folder.value));
+        Paths::EnsureDirectory(Paths::UserDirFolder(Config::paths.saves_folder.value));
     }
 
     void onFlushed(const card::File&) override {
@@ -255,6 +246,6 @@ CRMemcardBackend s_backend;
 void momentum::rf::initCard()
 {
     Paths::EnsureDirectory(
-        Paths::UserDirFolder(Config::paths.save_folder.value));
+        Paths::UserDirFolder(Config::paths.saves_folder.value));
     rainfall::card::SetBackend(&s_backend);
 }

@@ -1,7 +1,7 @@
 #include "momentum/core/service_locator.hpp"
 #include "momentum/utility/log.hpp"
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
 namespace {
     momentum::platform::IPlatform* sPlatform = nullptr;

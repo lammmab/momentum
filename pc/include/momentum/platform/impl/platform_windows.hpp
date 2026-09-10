@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #pragma once
 
 #include "momentum/platform/impl/platform_desktop.hpp"
@@ -27,3 +29,5 @@ namespace momentum::platform::impl {
         static void WriteSystemInfo(FILE* log);
     };
 }
+
+#endif // _WIN32

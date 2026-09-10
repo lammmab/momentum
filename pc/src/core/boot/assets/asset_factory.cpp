@@ -1,7 +1,7 @@
-#include "momentum/boot/assets/asset_factory.hpp"
+#include "momentum/core/assets/asset_factory.hpp"
 
 #if defined(PLATFORM_WINDOWS) || defined(PLATFORM_POSIX)
-#include "momentum/boot/assets/impl/asset_source_desktop.hpp"
+#include "momentum/core/assets/impl/asset_source_desktop.hpp"
 #endif
 
 namespace momentum::boot::assets {

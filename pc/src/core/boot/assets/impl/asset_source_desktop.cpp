@@ -1,6 +1,6 @@
-#include "momentum/boot/assets/impl/asset_source_desktop.hpp"
+#include "momentum/core/assets/impl/asset_source_desktop.hpp"
 
-#include "momentum/boot/assets/setup.hpp"
+#include "momentum/core/assets/setup.hpp"
 #include "momentum/core/config/config.hpp"
 #include "momentum/utility/log.hpp"
 
@@ -8,7 +8,7 @@
 #include <cstdio>
 #include <string>
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
 namespace {
 

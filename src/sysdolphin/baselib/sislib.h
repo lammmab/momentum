@@ -13,9 +13,11 @@
 #include <sysdolphin/baselib/cobj.h>
 #include <sysdolphin/baselib/sislib_font.h>
 
+#ifndef PLATFORM_PC // note(port): This is an embedded byte-array. On PC, we hardcode the array size in sislib_font
 /// How many glyphs the font atlas holds.
 #define HSD_SISLIB_FONT_GLYPHS                                                \
     (sizeof(HSD_SisLib_FontAtlas) / sizeof(TextGlyphTexture))
+#endif
 
 struct TextKerning {
     /*0x00*/ u8 left;

@@ -1,4 +1,5 @@
 #include "momentum/platform/impl/platform_posix.hpp"
+#include "momentum/platform/impl/platform_desktop.hpp"
 
 #include "momentum/platform/common/crash_handler.hpp"
 #include "momentum/utility/log.hpp"
@@ -30,9 +31,9 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_filesystem.h>
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
-static alignas(16) char sAltStack[65536];
+alignas(16) static char sAltStack[65536];
 static char sCrashDumpDir[512] = "";
 static pthread_t sMainThread;
 

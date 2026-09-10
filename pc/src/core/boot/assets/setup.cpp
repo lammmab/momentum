@@ -1,5 +1,5 @@
-#include "momentum/boot/assets/setup.hpp"
-#include "momentum/boot/assets/asset_factory.hpp"
+#include "momentum/core/assets/setup.hpp"
+#include "momentum/core/assets/asset_factory.hpp"
 
 #include "momentum/core/config/config.hpp"
 #include "momentum/core/paths.hpp"
@@ -21,7 +21,7 @@
 #include <fstream>
 #include <string>
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
 esfa::interface::Registry momentum::assets::registry{};
 
@@ -64,14 +64,10 @@ bool siphonExtract(const char* path, const std::string& root, momentum::platform
 void gcesfaLog(gcesfa::LogLevel level, std::string_view msg) {
     switch (level) {
         case gcesfa::LogLevel::Debug:
-            if (Config::meta.verbose_logging.value) {
-                LOG_DEBUG("{}", msg);
-            }
+            LOG_DEBUG("{}", msg);
             break;
         case gcesfa::LogLevel::Info:
-            if (Config::meta.verbose_logging.value) {
-                LOG_INFO("{}", msg);
-            }
+            LOG_INFO("{}", msg);
             break;
         case gcesfa::LogLevel::Warning:
             LOG_WARN("{}", msg);
@@ -215,7 +211,7 @@ bool momentum::assets::setup(const std::string& disc_location) {
             LOG_INFO("Game data found at: {}", extractRoot.string());
             writeSwapSchema(extractRoot);
             if (!runGCESFA(extractRoot)) return false;
-            Config::WriteConfig();
+            Config::writeConfig();
             return true;
         }
 
@@ -236,7 +232,7 @@ bool momentum::assets::setup(const std::string& disc_location) {
         LOG_INFO("Game data found at: {}", extractRoot.string());
         writeSwapSchema(extractRoot);
         if (!runGCESFA(extractRoot)) return false;
-        Config::WriteConfig();
+        Config::writeConfig();
         return true;
     }
 
@@ -261,6 +257,6 @@ bool momentum::assets::setup(const std::string& disc_location) {
         return false;
     }
 
-    Config::WriteConfig();
+    Config::writeConfig();
     return true;
 }

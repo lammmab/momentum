@@ -1,4 +1,4 @@
-#include "momentum/core/dol/assets.hpp"
+#include "momentum/core/dol/assets.h"
 #include "rainfall/platform/pc.h"
 
 #include <stdint.h>
@@ -10,7 +10,7 @@
 
 #include "momentum/utility/log.hpp"
 
-CR_FILENAME_LOGGER();
+FILENAME_LOGGER();
 
 namespace {
 
@@ -316,13 +316,6 @@ bool init(const char* gameDataDir) {
     s_dolReady = true;
     LOG_INFO("init: gameDataDir={} main.dol={} bytes, {} sections", s_gameDataDir, sz, s_dol.count);
 
-    static const char* kKnownRels[] = { "d_a_mant", "d_a_grass" };
-    for (const char* relName : kKnownRels) {
-        unsigned char* tmp = nullptr; size_t tmpSz = 0;
-        if (!LoadRelByName(relName, &tmp, &tmpSz)) {
-            LOG_WARN("init: {}.rel not found at startup", relName);
-        }
-    }
     return true;
 }
 
@@ -392,4 +385,34 @@ bool loadRelRange(void* dst, const char* relName, uint32_t fileOffset, uint32_t 
     return true;
 }
 
+}
+
+extern "C" bool pc_assets_load_dol_range(void* dst, uint32_t vaddr, uint32_t size) {
+    if (!s_dolReady) return false;
+    for (int i = 0; i < s_dol.count; i++) {
+        const DolSection& s = s_dol.sec[i];
+        if (vaddr >= s.vaddr && (uint64_t)vaddr + size <= (uint64_t)s.vaddr + s.size) {
+            uint32_t off = s.fileOff + (vaddr - s.vaddr);
+            if ((uint64_t)off + size > s_dol.dataSize) return false;
+            memcpy(dst, s_dol.data + off, size);
+            return true;
+        }
+    }
+    LOG_INFO("dol range not found vaddr=0x{:08X} size=0x{:X}", vaddr, size);
+    return false;
+}
+
+extern "C" bool pc_assets_load_rel_range(void* dst, const char* relName, uint32_t fileOffset, uint32_t size) {
+    unsigned char* buf = nullptr;
+    size_t sz = 0;
+    if (!LoadRelByName(relName, &buf, &sz)) {
+        LOG_INFO("rel not found: {}", relName);
+        return false;
+    }
+    if ((uint64_t)fileOffset + size > sz) {
+        LOG_INFO("rel range OOB {} off=0x{:X} size=0x{:X} relSz={}", relName, fileOffset, size, sz);
+        return false;
+    }
+    memcpy(dst, buf + fileOffset, size);
+    return true;
 }

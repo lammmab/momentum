@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "momentum/boot/assets/iasset_source.hpp"
+#include "momentum/core/assets/iasset_source.hpp"
 
 namespace momentum::platform {
     class IPlatform;

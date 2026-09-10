@@ -1,6 +1,11 @@
 #include "hsd_3B34.h"
 
 #include <placeholder.h>
+
+#ifdef PLATFORM_PC
+#include <stdlib.h>
+#endif
+
 #include <setjmp.h>
 #include <stdlib.h> // IWYU pragma: keep
 #include <string.h>
