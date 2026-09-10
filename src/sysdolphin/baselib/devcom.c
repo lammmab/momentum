@@ -1,4 +1,5 @@
 #include "devcom.h"
+#include <stdint.h>
 
 #include "debug.h"
 #include "devcom.static.h"
@@ -39,8 +40,9 @@ cleanup:
     OSRestoreInterrupts(enabled);
 }
 
-static void HSD_DevComStdCallback(ARQRequest* request)
+static void HSD_DevComStdCallback(uintptr_t arg)
 {
+    ARQRequest* request = (ARQRequest*) arg;
     int i;
 
     if (request == &devComARQR[0][0]) {
@@ -53,7 +55,7 @@ static void HSD_DevComStdCallback(ARQRequest* request)
     aramstate = 0;
     devComRelayBufFlag[i] = false;
     HSD_DevComDVDWakeUp();
-    HSD_DevComARAMWakeUp();
+    HSD_DevComARAMWakeUp(0);
 }
 
 static inline void HSD_DevComARAMCallback_inline(HSD_DevCom* devcom)
@@ -64,8 +66,9 @@ static inline void HSD_DevComARAMCallback_inline(HSD_DevCom* devcom)
     OSRestoreInterrupts(enabled);
 }
 
-static void HSD_DevComARAMCallback(ARQRequest* request)
+static void HSD_DevComARAMCallback(uintptr_t arg)
 {
+    ARQRequest* request = (ARQRequest*) arg;
     int i;
     void* buf;
 
@@ -87,7 +90,7 @@ static void HSD_DevComARAMCallback(ARQRequest* request)
 
     HSD_DevComUnlink(aramDC);
     HSD_DevComARAMCallback_inline(aramDC);
-    HSD_DevComStdCallback(request);
+    HSD_DevComStdCallback((uintptr_t)request);
 }
 
 static inline int getRelayBufIdx(void)
@@ -102,13 +105,13 @@ static inline int getRelayBufIdx(void)
     return -1;
 }
 
-void HSD_DevComARAMWakeUp(void)
+void HSD_DevComARAMWakeUp(uintptr_t arg)
 {
     bool enabled;
     int req_idx;
     u32 xfer_size2;
-    void (*arq_callback)(ARQRequest*);
-    void (*arq_callback2)(ARQRequest*);
+    void (*arq_callback)(uintptr_t);
+    void (*arq_callback2)(uintptr_t);
 
     enabled = OSDisableInterrupts();
     if (aramstate != 0) {
@@ -124,7 +127,7 @@ void HSD_DevComARAMWakeUp(void)
             }
             HSD_DevComUnlink(aramDC);
             OSRestoreInterrupts(enabled);
-            HSD_DevComARAMWakeUp();
+            HSD_DevComARAMWakeUp(0);
             return;
         }
         req_idx = getRelayBufIdx();
@@ -198,8 +201,9 @@ void HSD_DevComARAMWakeUp(void)
     OSRestoreInterrupts(enabled);
 }
 
-static void HSD_DevComDVDStdCallback(ARQRequest* request)
+static void HSD_DevComDVDStdCallback(uintptr_t arg)
 {
+    ARQRequest* request = (ARQRequest*) arg;
     int i;
     if (request == &devComARQR[0][0]) {
         i = 0;
@@ -210,14 +214,14 @@ static void HSD_DevComDVDStdCallback(ARQRequest* request)
     }
     devComRelayBufFlag[i] = false;
     HSD_DevComDVDWakeUp();
-    HSD_DevComARAMWakeUp();
+    HSD_DevComARAMWakeUp(0);
 }
 
 static void HSD_DevComDVDARAMEndCallback(ARQRequest* request)
 {
     int i;
 
-    HSD_DevComDVDStdCallback(request);
+    HSD_DevComDVDStdCallback((uintptr_t)request);
 
     if (request == &devComARQR[0][0]) {
         i = 0;
@@ -293,7 +297,7 @@ static void HSD_DevComDVDCallback(s32 result, DVDFileInfo* unused)
         HSD_DevCom_804D77F5 = 0;
         devComRelayBufFlag[HSD_DevCom_804D77F6] = false;
         HSD_DevComDVDWakeUp();
-        HSD_DevComARAMWakeUp();
+        HSD_DevComARAMWakeUp(0);
     } else if (type == 0x23) {
         HSD_DevCom_804D77F7 = HSD_DevCom_804D77F6;
         if (dvdDC->size > DEVCOM_BUF_SIZE) {

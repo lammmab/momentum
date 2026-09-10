@@ -21,7 +21,7 @@ extern volatile s32 efLib_AnimCount;
 
 // There seems to be multiple spawners, one dispatcher
 
-void* efAlt_Spawn(s32 gfx_id, HSD_GObj* gobj, va_list vlist_arg)
+void* efAlt_Spawn(s32 gfx_id, HSD_GObj* gobj, va_list vlist)
 {
     EF_Effect* effect;
     HSD_JObj* jobj;

@@ -16,7 +16,7 @@
 FILENAME_LOGGER();
 
 #include "momentum/momentum.hpp"
-#include "momentum/core/dol/assets.h"
+#include "momentum/core/dol/assets.hpp"
 #include "momentum/core/paths.hpp"
 
 #include "dolphin/dvd.h"
