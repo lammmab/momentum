@@ -292,7 +292,6 @@ u8 runGameMode(u8 mode_kind)
     u8 override;
     GameMode* mode;
     struct stateMachine* sm = &state_machine;
-    extern bool gm_single_frame_mode;
     PAD_STACK(2 * 4);
 
     if (!runGameMode_initialized || runGameMode_current_mode == NULL ||

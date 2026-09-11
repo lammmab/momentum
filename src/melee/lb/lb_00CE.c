@@ -84,6 +84,7 @@ f32 powf(f32 arg0, f32 arg1)
     } while (var_f4 != temp_f1);
     return expf(arg1 * (2.0f * var_f4));
 }
+#endif // PLATFORM_PC
 
 s32 powi(s32 base, s32 exponent)
 {
@@ -109,7 +110,6 @@ s32 powi(s32 base, s32 exponent)
 return_zero:
     return 0;
 }
-#endif
 
 f32 lb_8000D008(f32 point_y_in, f32 point_x)
 {

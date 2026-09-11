@@ -14,6 +14,10 @@
 #include <MetroTRK/ppc_reg.h>
 #endif
 
+#ifdef PLATFORM_PC
+#include "momentum/core/dol/assets_table.inc"
+#endif
+
 typedef struct _ExcptNode {
     /* 0x1 */ struct _ExcptNode* next;
     /* 0x4 */ void (*callback)(struct _ExcptNode*);

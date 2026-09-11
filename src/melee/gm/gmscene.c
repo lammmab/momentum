@@ -35,9 +35,9 @@ static u64 gm_803DA888[8] = {
 
 u64 gm_803DA8C8[2] = { -1, -1 };
 
-static bool gm_single_frame_mode = false;
-static bool gm_frame_processed = false;
-static bool gm_scene_active = false;
+bool gm_single_frame_mode = false;
+bool gm_frame_processed = false;
+bool gm_scene_active = false;
 
 void gm_SetSingleFrameMode(bool enabled)
 {

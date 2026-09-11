@@ -15,6 +15,7 @@
 
 void db_ClearFPUExceptions(void)
 {
+#ifndef PLATFORM_PC
     OSContext* ctx;
 
     PPCMtmsr(PPCMfmsr() | 0x900);
@@ -22,6 +23,7 @@ void db_ClearFPUExceptions(void)
     OSSaveFPUContext(ctx);
     ctx->fpscr &= 0xFFFFF;
     OSLoadFPUContext(ctx);
+#endif
 }
 
 static void fn_HSDPanicHandler(OSContext* ctx)

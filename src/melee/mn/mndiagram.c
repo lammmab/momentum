@@ -25,6 +25,8 @@
 #include <sysdolphin/baselib/jobj.h>
 #include <sysdolphin/baselib/memory.h>
 
+#include <math.h>
+
 /// @todo Split-derived data; types are inferred.
 void* mnDiagram_804A0814[4];
 void* mnDiagram_804A07E4[4];

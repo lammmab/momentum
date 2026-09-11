@@ -36,4 +36,8 @@
 
 /* 4D6724 */ extern void (*gm_804D6724)(void);
 
+extern bool gm_single_frame_mode;
+extern bool gm_frame_processed;
+extern bool gm_scene_active;
+
 #endif

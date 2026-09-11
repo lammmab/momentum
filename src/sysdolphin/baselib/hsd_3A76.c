@@ -14,6 +14,10 @@
 #include <dolphin/types.h>
 #include <melee/lb/lbarchive.h> ///< @todo Circular include
 
+#ifdef PLATFORM_PC
+#include "momentum/core/dol/assets_table.inc"
+#endif
+
 static inline f32 HSD_SisLib_GlyphWidth(HSD_Text* text, f32 scale_x)
 {
     return 32.0F * text->x80.x * scale_x;
