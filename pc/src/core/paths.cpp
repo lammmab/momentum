@@ -58,7 +58,7 @@ const std::string& Paths::GetWriteDir() {
         if (home) return std::string(home) + "/Documents/";
 #endif
         const std::string& exeDir = Paths::GetLaunchDir();
-        const char* pref = rfPlatformGetPrefPath("Linifadomra", "CourageReborn");
+        const char* pref = rfPlatformGetPrefPath("Linifadomra", "Momentum");
         std::string result = pref ? pref : exeDir;
         rfPlatformFree(pref);
         return result;

@@ -231,7 +231,7 @@ void melee_frame(void)
     gm_801A4510_step();
 }
 
-int main(void)
+int melee_main(void)
 {
     melee_init();
     gm_801A4510();

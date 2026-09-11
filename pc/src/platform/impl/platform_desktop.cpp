@@ -73,6 +73,9 @@ namespace momentum::platform::impl {
 #endif
     }
 
+    void PlatformDesktop::InstallCrashHandler() {
+    }
+
     void PlatformDesktop::WriteSdlGameState(FILE* log) {
         fprintf(log, "\nGame State:\n");
         const char* gpuDriver = SDL_GetHint(SDL_HINT_GPU_DRIVER);
