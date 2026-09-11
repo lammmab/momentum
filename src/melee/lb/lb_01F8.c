@@ -101,10 +101,11 @@ void lbMthp8001FAA0(const char* filename, int width, int height)
     memset(&header, 0, sizeof(header));
     header.w = width;
     header.h = height;
-    THPDec_8032F8D4(lbl_804335B8.unk94, context);
+    THPParseJpegInfo(lbl_804335B8.unk94, context);
     decode_buf = HSD_MemAlloc(THPDec_Get420BufferSize(context, header.h));
     decoded = THPVideoDecode(&header, &output, decode_buf, lbl_804335B8.unk94,
                              context);
+#ifndef PLATFORM_PC
     if (lbl_804335B8.x6C == 0x280) {
         THPDec_80331340(decoded, lbl_804335B8.x20, lbl_804335B8.x44,
                         lbl_804335B8.x68);
@@ -112,6 +113,7 @@ void lbMthp8001FAA0(const char* filename, int width, int height)
         THPDec_803313D0(decoded, lbl_804335B8.x20, lbl_804335B8.x44,
                         lbl_804335B8.x68, lbl_804335B8.x6C);
     }
+#endif
     HSD_Free(context);
     HSD_Free(decode_buf);
 }

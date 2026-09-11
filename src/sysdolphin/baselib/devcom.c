@@ -217,8 +217,9 @@ static void HSD_DevComDVDStdCallback(uintptr_t arg)
     HSD_DevComARAMWakeUp(0);
 }
 
-static void HSD_DevComDVDARAMEndCallback(ARQRequest* request)
+static void HSD_DevComDVDARAMEndCallback(uintptr_t arg)
 {
+    ARQRequest* request = (ARQRequest*)arg;
     int i;
 
     HSD_DevComDVDStdCallback((uintptr_t)request);
@@ -438,7 +439,7 @@ int HSD_DevComRequest(int file, uintptr_t src, uintptr_t dest, size_t size,
     if (devComStatus[pri] == NULL) {
         devComStatus[pri] = dc;
         HSD_DevComDVDWakeUp();
-        HSD_DevComARAMWakeUp();
+        HSD_DevComARAMWakeUp(0);
     }
     OSRestoreInterrupts(enabled);
 

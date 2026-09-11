@@ -337,7 +337,7 @@ static s32 fn_8001EF5C(THPDecComp* data)
             &data->unk_A8, &spC, (void*) data->unk_98,
             (void*) (data->frame_buffers[data->unk_90] + 4), &data->unk_9C);
         OSRestoreInterrupts(intr);
-
+#ifndef PLATFORM_PC
         if (data->width == 0x280) {
             THPDec_80331340(data->unk_98, data->unk_50, data->unk_54,
                             data->unk_58);
@@ -348,6 +348,7 @@ static s32 fn_8001EF5C(THPDecComp* data)
             THPDec_803313D0(data->unk_98, data->unk_50, data->unk_54,
                             data->unk_58, data->width);
         }
+#endif
 
         intr = OSDisableInterrupts();
         data->unk_94 = data->unk_90;

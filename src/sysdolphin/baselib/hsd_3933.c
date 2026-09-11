@@ -5,6 +5,7 @@
 #include "hsd_392C.h"
 #include "random.h"
 #include <dolphin/os.h>
+#include <dolphin/mcc.h>
 
 typedef struct {
     s32 x0;
