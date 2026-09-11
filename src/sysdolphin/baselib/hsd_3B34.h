@@ -3,10 +3,18 @@
 
 #include <Runtime/platform.h>
 
+#ifdef PLATFORM_PC
+#include <jmp/jmp.h>
+#else
 #include <setjmp.h>
+#endif
 
 typedef struct JpegWork {
+#ifdef PLATFORM_PC
+    gc_jmp_buf buf;
+#else
     jmp_buf buf;
+#endif
     s32 x118[0x100];
     s32 x518[0x40];
     s32 x618[0x40];

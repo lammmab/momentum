@@ -1,9 +1,13 @@
 #include <placeholder.h>
-#include <Runtime/Gecko_setjmp.h>
+#include <jmp/jmp.h>
 
 #include "hsd_3B34.h"
 
+#ifdef PLATFORM_PC
+gc_jmp_buf hsd_804D2E70;
+#else
 jmp_buf hsd_804D2E70;
+#endif
 u8 hsd_804D2F68[0x70C];
 
 extern u8* hsd_804D79B8;
@@ -21,7 +25,11 @@ typedef struct JpegWorkData {
 } JpegWorkData;
 
 typedef struct JpegState {
+#ifdef PLATFORM_PC
+    gc_jmp_buf jmp;
+#else
     jmp_buf jmp;
+#endif
     JpegWorkData work;
 } JpegState;
 
@@ -167,17 +175,29 @@ static inline s32 hsd_803B5C4C_read(s32 bits, s32 bit_count)
         if (hsd_804D79C4 == 0) {
             hsd_804D79C4 = 8;
             if (hsd_804D79B8 >= &hsd_804D79BC[hsd_804D79C0]) {
+#ifdef PLATFORM_PC
+                gclongjmp(&hsd_804D2E70, 1);
+#else
                 longjmp(hsd_804D2E70, 1);
+#endif
             }
             next_byte = hsd_804D79B8;
             hsd_804D79B8 = next_byte + 1;
             hsd_804D79C8 = *next_byte;
             if (hsd_804D79C8 == 0xFF) {
                 if ((*hsd_804D79B8) != 0) {
+#ifdef PLATFORM_PC
+                    gclongjmp(&hsd_804D2E70, 1);
+#else
                     longjmp(hsd_804D2E70, 1);
+#endif
                 } else {
                     if (hsd_804D79B8 >= &hsd_804D79BC[hsd_804D79C0]) {
+#ifdef PLATFORM_PC
+                        gclongjmp(&hsd_804D2E70, 1);
+#else
                         longjmp(hsd_804D2E70, 1);
+#endif
                     }
                     hsd_804D79B8 += 1;
                 }
@@ -666,7 +686,11 @@ static inline s32 hsd_803B6BE4_inline(char* src, s32 size, void* dst)
     state.work->work.prev_dc[0] = state.work->work.prev_dc[1] =
         state.work->work.prev_dc[2] = 0;
     hsd_804D79C4 = 0;
+#ifdef PLATFORM_PC
+    if (gcsetjmp(&state.work->jmp) != 0) {
+#else
     if (setjmp(state.work->jmp) != 0) {
+#endif
         return 0;
     }
     src_byte0 = &hsd_804D79BC[hsd_804D79C0];
@@ -707,7 +731,11 @@ find_luma_quant:
         }
     } else {
         if (++hsd_804D79B8 >= src_byte0) {
+#ifdef PLATFORM_PC
+            gclongjmp(&state.work->jmp, 1);
+#else
             longjmp(state.work->jmp, 1);
+#endif
         } else {
             goto find_luma_quant;
         }
@@ -767,7 +795,11 @@ find_chroma_quant:
         }
     } else {
         if (++hsd_804D79B8 >= src_byte0) {
+#ifdef PLATFORM_PC
+            gclongjmp(&state.work->jmp, 1);
+#else
             longjmp(state.work->jmp, 1);
+#endif
         } else {
             goto find_chroma_quant;
         }
@@ -782,7 +814,11 @@ find_frame:
         hsd_804D79B8 += 0xC;
     } else {
         if (++hsd_804D79B8 >= src_byte0) {
+#ifdef PLATFORM_PC
+            gclongjmp(&state.work->jmp, 1);
+#else
             longjmp(state.work->jmp, 1);
+#endif
         } else {
             goto find_frame;
         }
@@ -794,7 +830,11 @@ find_scan:
         hsd_804D79B8 += 0xC;
     } else {
         if (++hsd_804D79B8 >= src_byte0) {
+#ifdef PLATFORM_PC
+            gclongjmp(&state.work->jmp, 1);
+#else
             longjmp(state.work->jmp, 1);
+#endif
         } else {
             goto find_scan;
         }

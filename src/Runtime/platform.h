@@ -183,7 +183,7 @@ typedef bool (*Predicate)(void);
 #define WEAK
 #endif
 
-#ifdef PLATFORM_PC
+#if defined(PLATFORM_PC) && !defined(M_PI_2)
 #define M_PI_2 (M_PI / 2)
 #endif
 
@@ -202,7 +202,9 @@ typedef bool (*Predicate)(void);
 
 #define SIGNF(x) ((x) > 0.0f ? 1.0f : -1.0f)
 
+#ifndef FLT_EPSILON
 #define FLT_EPSILON 1.00000001335e-10F
+#endif
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 

@@ -1,7 +1,7 @@
 #include "granime.h"
 
 #include <Runtime/platform.h>
-#include <Runtime/Gecko_setjmp.h>
+#include <jmp/jmp.h>
 
 #include <stdarg.h>
 
@@ -51,7 +51,11 @@
 /* 4D6958 */ static float grAnime_804D6958;
 /* 4D695C */ static float grAnime_804D695C;
 
+#ifdef PLATFORM_PC
+/* 49EE40 */ gc_jmp_buf grAnime_8049EE40;
+#else
 /* 49EE40 */ jmp_buf grAnime_8049EE40;
+#endif
 
 /// @todo .sdata order hack
 #ifdef MUST_MATCH
@@ -1045,7 +1049,11 @@ void grAnime_801C8138(HSD_GObj* gobj, enum_t arg1, bool arg2)
 void fn_801C82E8(int arg0, int* arg1)
 {
     *arg1 = arg0;
+#ifdef PLATFORM_PC
+    gclongjmp(&grAnime_8049EE40, 1);
+#else
     longjmp(grAnime_8049EE40, 1);
+#endif
 }
 
 HSD_AObj* grAnime_801C8318(HSD_GObj* gobj, int arg1, u32 arg2)
@@ -1066,7 +1074,11 @@ HSD_AObj* grAnime_801C8318(HSD_GObj* gobj, int arg1, u32 arg2)
     if (arg2 & 4) {
         var_r30 |= 0x100;
     }
+#if PLATFORM_PC
+    if (gcsetjmp(&grAnime_8049EE40) == 0) {
+#else
     if (setjmp(grAnime_8049EE40) == 0) {
+#endif
         HSD_ForeachAnim(jobj, JOBJ_TYPE, var_r30, fn_801C82E8, AOBJ_ARG_AV,
                         &sp14);
     }
