@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/pcport"><img src="https://img.shields.io/badge/Discord-MegaParty-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="https://discord.gg/pcport"><img src="https://img.shields.io/badge/Discord-MOMENTUM-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
   <a href="https://linifadomra.com"><img src="https://img.shields.io/badge/website-linifadomra-brightgreen?style=for-the-badge", alt="Linifadomra"></a>
 </p>
 
