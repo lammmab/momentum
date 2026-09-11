@@ -5,6 +5,7 @@
 set(GAME_SRC_DIRS
     melee
     sysdolphin
+    jmp
 )
 
 set(GAME_SOURCES ${GAME_ROOT}/src/melee/gm/gmmain.c)

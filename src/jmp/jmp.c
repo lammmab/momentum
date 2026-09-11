@@ -1,4 +1,4 @@
-#include "game/jmp.h"
+#include "jmp.h"
 #include <limits.h>
 #include <stdlib.h>
 
