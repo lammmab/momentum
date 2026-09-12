@@ -30,7 +30,8 @@ FILENAME_LOGGER();
 void run(std::unique_ptr<momentum::platform::IPlatform>& platform) {
     melee_init();
 
-    constexpr uint64_t FRAME_NS = 1000000000ULL / 30;
+
+    constexpr uint64_t FRAME_NS = 1000000000ULL / 60;
     uint64_t lastTickNs = platform->GetTickNS();
 
     while (rfRendererProcessEvents()) {
@@ -62,7 +63,7 @@ int main(int argc, char* argv[]) {
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
 
-    LOG_INFO("Starting Courage Reborn...");
+    LOG_INFO("Starting Momentum...");
 
 #ifdef DEBUG
     spdlog::set_level(spdlog::level::debug);
@@ -81,6 +82,8 @@ int main(int argc, char* argv[]) {
     }
 
     momentum::args::Config config = momentum::args::parse(argc, argv);
+
+    if (config.debug) spdlog::set_level(spdlog::level::debug);
 
     if (!Config::configExists()) {
         Config::writeConfig();
