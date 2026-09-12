@@ -8,6 +8,9 @@
 #include "momentum/utility/log.hpp"
 #include "momentum/utility/region_format.hpp"
 
+#include "momentum/core/swap/ssm.hpp"
+#include "momentum/core/swap/sem.hpp"
+
 #include "gcesfa/gcesfa.hpp"
 #include "gcesfa/logger.hpp"
 #include "gcesfa/progress.hpp"
@@ -27,7 +30,7 @@ esfa::interface::Registry momentum::assets::registry{};
 
 namespace {
 
-constexpr int kSwapSchemaVersion = gcesfa::kSwapSchemaVersion;
+constexpr int kSwapSchemaVersion = 2;
 
 bool dataExists() {
     const std::filesystem::path dataPath =
@@ -140,8 +143,20 @@ bool runGCESFA(const std::filesystem::path& dir) {
     gcesfa::setLogger(gcesfaLog);
     gcesfa::RegisterDefaultFormats(momentum::assets::registry);
 
+    momentum::overrides::RegisterSsm(momentum::assets::registry);
+    momentum::overrides::RegisterSem(momentum::assets::registry);
+
     gcesfa::search::SearchConfig searchConfig;
-    searchConfig.match = [](const std::filesystem::path&) -> gcesfa::search::matchResult {
+    searchConfig.match = [](const std::filesystem::path& path) -> gcesfa::search::matchResult {
+        if (path.extension() == ".ssm")
+        {
+            return {true, momentum::overrides::kSsmRegistryKey};
+        }
+        if (path.extension() == ".sem")
+        {
+            return {true, momentum::overrides::kSemRegistryKey};
+        }
+
         return {false, ""};
     };
 
